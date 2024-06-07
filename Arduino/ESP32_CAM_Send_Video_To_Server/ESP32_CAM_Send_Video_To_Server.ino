@@ -1,11 +1,11 @@
 #include <WiFi.h>
 #include <WebServer.h>
-#include <ESP32Servo.h> // Incluir la librería ESP32Servo
+#include <ESP32Servo.h>
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
+#include <WiFiManager.h> // Incluir la librería WiFiManager
 
 #define CAMERA_MODEL_AI_THINKER
-
 
 #include "esp_camera.h"
 
@@ -16,14 +16,8 @@
 // LED Flash PIN (GPIO 4)
 #define FLASH_LED_PIN 4             
 
-//======================================== Insert your network credentials.
-const char* ssid = "Fibertel WiFi538 2.4 GHz";
-const char* password = "0042018395";
-//======================================== 
-
 // Server Address or Server IP.
-String serverName = "192.168.0.248";  //--> Change with your server computer's IP address or your Domain name.
-// The file path "upload_img.php" on the server folder.
+String serverName = "192.168.0.248";  //--> Cambia esto por la dirección IP de tu servidor o tu nombre de dominio
 String serverPath = "/ESP32CAM/upload_img.php";
 // Server Port.
 const int serverPort = 80;
@@ -39,7 +33,6 @@ Servo myServo; // Crear una instancia del servomotor
 int servoPin = 13; // Definir el pin del servomotor
 int servoPos = 10; // Posición inicial del servomotor
 
-//________________________________________________________________________________ sendFrameToServer()
 void sendFrameToServer(camera_fb_t * fb) {
   if (!fb) {
     Serial.println("Camera capture failed");
@@ -135,8 +128,8 @@ void handleRoot() {
   server.send(200, "text/plain", "Use /start to start the camera, /stop to stop the camera, /servoLeft to move servo left, and /servoRight to move servo right");
 }
 
-//________________________________________________________________________________ VOID SETUP()
 void setup() {
+
   // Disable brownout detector.
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   
@@ -145,38 +138,20 @@ void setup() {
 
   pinMode(FLASH_LED_PIN, OUTPUT);
 
-  // Setting the ESP32 WiFi to station mode.
-  WiFi.mode(WIFI_STA);
-  Serial.println();
+  // Configurar el WiFiManager para manejar la conexión WiFi
+  WiFiManager wifiManager;
 
-  //---------------------------------------- The process of connecting ESP32 CAM with WiFi Hotspot / WiFi Router.
-  Serial.println();
-  Serial.print("Connecting to : ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, password);
-  
-  int connecting_process_timed_out = 20; //--> 20 = 20 seconds.
-  connecting_process_timed_out = connecting_process_timed_out * 2;
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
-    delay(500);
-    if(connecting_process_timed_out > 0) connecting_process_timed_out--;
-    if(connecting_process_timed_out == 0) {
-      Serial.println();
-      Serial.print("Failed to connect to ");
-      Serial.println(ssid);
-      Serial.println("Restarting the ESP32 CAM.");
-      delay(1000);
-      ESP.restart();
-    }
+  //wifiManager.resetSettings(); // Descomentar esta línea para borrar las credenciales guardadas
+  if (!wifiManager.autoConnect("ESP32-CAM-AP")) {
+    Serial.println("Failed to connect and hit timeout");
+    delay(3000);
+    ESP.restart();
   }
+  Serial.println("Connected to WiFi!");
 
-  Serial.println();
-  Serial.print("Successfully connected to ");
-  Serial.println(ssid);
   Serial.println(WiFi.localIP());
 
-  //---------------------------------------- Set the camera ESP32 CAM.
+  // Set up the camera
   Serial.println();
   Serial.print("Set the camera ESP32 CAM...");
   
@@ -203,56 +178,54 @@ void setup() {
   config.pixel_format = PIXFORMAT_JPEG;
 
   if(psramFound()){
-    config.frame_size = FRAMESIZE_HQVGA;
-    config.jpeg_quality = 10;  //--> 0-63 lower number means higher quality
-    config.fb_count = 2;
+    config.frame_size = FRAMESIZE_QQVGA;
+    config.jpeg_quality = 20;  //--> 0-63 lower number means higher quality
+    config.fb_count = 1;
   } else {
-    config.frame_size = FRAMESIZE_HQVGA;
-config.jpeg_quality = 12; //--> 0-63 lower number means higher quality
-config.fb_count = 1;
+    config.frame_size = FRAMESIZE_QQVGA;
+    config.jpeg_quality = 22; //--> 0-63 lower number means higher quality
+    config.fb_count = 1;
+  }
+
+  esp_err_t err = esp_camera_init(&config);
+  if (err != ESP_OK) {
+    Serial.printf("Camera init failed with error 0x%x", err);
+    Serial.println();
+    Serial.println("Restarting the ESP32 CAM.");
+    delay(1000);
+    ESP.restart();
+  }
+
+  sensor_t * s = esp_camera_sensor_get();
+  s->set_framesize(s, FRAMESIZE_HQVGA);
+
+  Serial.println();
+  Serial.println("Set camera ESP32 CAM successfully.");
+
+  // Initialize the servo
+  myServo.setPeriodHertz(50); // Establecer la frecuencia del PWM del servo en 50Hz
+  myServo.attach(servoPin, 500, 2400); // Asignar el pin del servo y los límites del pulso
+  myServo.write(servoPos); // Inicializar la posición del servo
+
+  // Set up web server routes.
+  server.on("/", handleRoot);
+  server.on("/start", handleStartCamera);
+  server.on("/stop", handleStopCamera);
+  server.on("/servoLeft", handleServoLeft);
+  server.on("/servoRight", handleServoRight);
+  server.on("/servoAction", handleServoAction);
+
+  server.begin();
+  Serial.println("HTTP server started");
 }
 
-esp_err_t err = esp_camera_init(&config);
-if (err != ESP_OK) {
-Serial.printf("Camera init failed with error 0x%x", err);
-Serial.println();
-Serial.println("Restarting the ESP32 CAM.");
-delay(1000);
-ESP.restart();
-}
-
-sensor_t * s = esp_camera_sensor_get();
-s->set_framesize(s, FRAMESIZE_HQVGA);
-
-Serial.println();
-Serial.println("Set camera ESP32 CAM successfully.");
-
-// Initialize the servo
-myServo.setPeriodHertz(50); // Establecer la frecuencia del PWM del servo en 50Hz
-myServo.attach(servoPin, 500, 2400); // Asignar el pin del servo y los límites del pulso
-myServo.write(servoPos); // Inicializar la posición del servo
-
-// Set up web server routes.
-server.on("/", handleRoot);
-server.on("/start", handleStartCamera);
-server.on("/stop", handleStopCamera);
-server.on("/servoLeft", handleServoLeft);
-server.on("/servoRight", handleServoRight);
-server.on("/servoAction", handleServoAction);
-
-server.begin();
-Serial.println("HTTP server started");
-}
-//________________________________________________________________________________
-
-//________________________________________________________________________________ VOID LOOP()
 void loop() {
-// Handle client requests
-server.handleClient();
+  // Handle client requests
+  server.handleClient();
 
-if (isCameraActive) {
-camera_fb_t * fb = esp_camera_fb_get();
-sendFrameToServer(fb);
-delay(33); // Delay to achieve approximately 30 fps
-}
+  if (isCameraActive) {
+    camera_fb_t * fb = esp_camera_fb_get();
+    sendFrameToServer(fb);
+    delay(33); // Delay to achieve approximately 30 fps
+  }
 }
