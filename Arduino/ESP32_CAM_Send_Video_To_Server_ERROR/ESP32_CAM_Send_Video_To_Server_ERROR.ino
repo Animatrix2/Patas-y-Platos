@@ -110,23 +110,24 @@ void handleServoAction() {
     int delayTime = server.arg("delay").toInt();
     
     if (delayTime > 0) {
+      int originalPos = servoPos; // Almacenar la posición original del servo
+
       servoPos += 90;
       if (servoPos > 180) servoPos = 180;
       myServo.write(servoPos);
-      server.send(200, "text/plain", "Servo moved right with delay");
-      Serial.println("Servo moved right");
+      Serial.println("Servo moved");
 
       delay(delayTime);
 
-      servoPos -= 90;
-      if (servoPos < 0) servoPos = 0;
+      servoPos = originalPos; // Restaurar la posición original del servo
       myServo.write(servoPos);
-      server.send(200, "text/plain", "Servo moved left after delay");
-      Serial.println("Servo moved left");
+      Serial.println("Servo returned");
       return;
     }
   }
+  server.send(400, "text/plain", "Invalid or missing delay parameter");
 }
+
 
 void moveServoAutomatically() {
   if (moveServo) {
@@ -147,15 +148,8 @@ void moveServoAutomatically() {
 }
 
 void checkServoSchedule() {
-
-  //ACÁ ESTÁ EL ERROR -w-
-  //La función se activa pero siempre falla el condicional, se necesita probar otro método
   if (hour() == setHour && minute() == setMinute) {
     moveServo = true;
-    Serial.println("Schedule Time");
-  }
-  else{
-    Serial.println("No Schedule Time");
   }
 }
 
@@ -260,7 +254,7 @@ void setup() {
   server.begin();
   Serial.println("HTTP server started");
 
-  servoTicker.attach(5, checkServoSchedule); 
+  servoTicker.attach(60, checkServoSchedule); 
 }
 
 void loop() {
