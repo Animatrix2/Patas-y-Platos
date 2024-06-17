@@ -19,14 +19,15 @@
     <button onclick="servoRight()">Servo Right</button>
     <br>
     <label for="hora">Hora</label>
-    <input type="number" id="hora">
+    <input type="number" id="hora" min="0" max="23">
     <label for="minuto">Minuto</label>
-    <input type="number" id="minuto">
+    <input type="number" id="minuto" min="0" max="59">
     <label for="delay">Duración (seg)</label>
-    <input type="number" id="delay">
+    <input type="number" id="delay" min="0" max="10">
     <br>
     <button onclick="Accionar()">Accionar</button>
     <button onclick="Programar()">Programar</button>
+    <button onclick="Quitar()">Quitar Horario</button>
 
     <br>
     <img id="video-frame" src="uploads/current_frame.jpg" alt="Video Frame">
@@ -88,6 +89,16 @@
             setServoSchedule(horaValue, minutoValue, delayValue);
         }
 
+        function Quitar() {
+            const hora = document.getElementById("hora");
+            const minuto = document.getElementById("minuto");
+
+            const horaValue = hora.value;
+            const minutoValue = minuto.value;
+
+            RemoveServoSchedule(horaValue, minutoValue);
+        }
+
         
         function servoAction(inputValue) {
             const esp32Url = `http://192.168.0.10/servoAction?delay=${inputValue}`; // Replace with your ESP32-CAM IP address
@@ -96,6 +107,11 @@
 
         function setServoSchedule(horaValue, minutoValue, delayValue) {
             const esp32Url = `http://192.168.0.10/setServoSchedule?hora=${horaValue}&minuto=${minutoValue}&duracion=${delayValue}`; // Replace with your ESP32-CAM IP address
+            sendRequest(esp32Url);
+        }
+
+        function RemoveServoSchedule(horaValue, minutoValue){
+            const esp32Url = `http://192.168.0.10/removeServoSchedule?hora=${horaValue}&minuto=${minutoValue}`; // Replace with your ESP32-CAM IP address
             sendRequest(esp32Url);
         }
     </script>

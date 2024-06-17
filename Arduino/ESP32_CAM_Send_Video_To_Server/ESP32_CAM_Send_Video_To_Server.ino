@@ -3,9 +3,10 @@
 #include <ESP32Servo.h>
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
-#include <WiFiManager.h> 
+#include <WiFiManager.h>
 #include <Ticker.h>
 #include <TimeLib.h>
+#include <NTPClient.h>
 
 #define CAMERA_MODEL_AI_THINKER
 
@@ -14,7 +15,7 @@
 
 #define FLASH_LED_PIN 4
 
-String serverName = "192.168.0.248";  
+String serverName = "192.168.0.248";
 String serverPath = "/ESP32CAM/upload_img.php";
 const int serverPort = 80;
 
@@ -22,16 +23,32 @@ WiFiClient client;
 WebServer server(80);
 
 bool isCameraActive = false;
-Servo myServo; 
-int servoPin = 13; 
-int servoPos = 0; 
+Servo myServo;
+int servoPin = 13;
+int servoPos = 0;
 
 Ticker servoTicker;
-int moveDuration = 0;  
-int setHour = -1;    
-int setMinute = -1;  
+Ticker midnightTicker;
+int moveDuration = 0;
+int setHour = -1;
+int setMinute = -1;
 bool moveServo = false;
 Ticker servoReturnTicker;
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", -3 * 3600, 60000); // GMT-3 for Buenos Aires, 1-minute update interval
+
+// Definir estructura para los horarios programados
+struct Schedule {
+  int hour;
+  int minute;
+  bool activated;
+};
+
+// Arreglo para almacenar múltiples horarios programados
+const int MAX_SCHEDULES = 5;  // Ajustar según la cantidad deseada
+Schedule schedules[MAX_SCHEDULES];
+
 
 void sendFrameToServer(camera_fb_t * fb) {
   if (!fb) {
@@ -107,7 +124,7 @@ void handleServoRight() {
 
 void handleServoAction() {
   if (server.hasArg("delay")) {
-    int delayTime = server.arg("delay").toInt();
+    int delayTime = server.arg("delay").toInt() * 1000;
     
     if (delayTime > 0) {
       servoPos += 90;
@@ -148,37 +165,126 @@ void moveServoAutomatically() {
 
 void checkServoSchedule() {
 
-  //ACÁ ESTÁ EL ERROR -w-
-  //La función se activa pero siempre falla el condicional, se necesita probar otro método
-  if (hour() == setHour && minute() == setMinute) {
-    moveServo = true;
-    Serial.println("Schedule Time");
+  timeClient.update(); // Actualizar la hora
+
+  int currentHour = timeClient.getHours();
+
+  int currentMinute = timeClient.getMinutes();
+
+  Serial.printf("Current Time: %02d:%02d\n", currentHour, currentMinute);
+
+  for (int i = 0; i < MAX_SCHEDULES; i++) {
+
+    Serial.printf("Checking Schedule %d: %02d:%02d, activated: %d\n", i, schedules[i].hour, schedules[i].minute, schedules[i].activated);
+
+    if (schedules[i].hour == currentHour && schedules[i].minute == currentMinute && !schedules[i].activated) {
+
+      moveServo = true;
+
+      schedules[i].activated = true; // Marcar como activado para este horario
+
+      Serial.println("Schedule Time");
+
+      break; // Solo activamos una vez por horario
+
+    }
+
   }
-  else{
-    Serial.println("No Schedule Time");
-  }
+
 }
 
 void handleSetServoSchedule() {
+
   if (server.hasArg("hora") && server.hasArg("minuto") && server.hasArg("duracion")) {
+
     setHour = server.arg("hora").toInt();
+
     setMinute = server.arg("minuto").toInt();
-    moveDuration = server.arg("duracion").toInt() * 1000; 
-    
+
+    moveDuration = server.arg("duracion").toInt() * 1000;
+
+    // Buscar un espacio libre en el arreglo de horarios para almacenar el nuevo horario
+
+    for (int i = 0; i < MAX_SCHEDULES; i++) {
+
+      if (schedules[i].hour == -1 && schedules[i].minute == -1) {
+
+        schedules[i].hour = setHour;
+
+        schedules[i].minute = setMinute;
+
+        schedules[i].activated = false; // Inicializar como no activado
+
+        break;
+
+      }
+
+    }
+
     server.send(200, "text/plain", "Servo schedule set");
+
     Serial.printf("Servo schedule set to %02d:%02d for %d seconds\n", setHour, setMinute, moveDuration / 1000);
+
+  } else {
+
+    server.send(400, "text/plain", "Missing parameters");
+
+  }
+
+}
+
+void handleRemoveServoSchedule() {
+  if (server.hasArg("hora") && server.hasArg("minuto")) {
+    int removeHour = server.arg("hora").toInt();
+    int removeMinute = server.arg("minuto").toInt();
+
+    bool scheduleFound = false;
+
+    // Buscar y eliminar el horario especificado
+    for (int i = 0; i < MAX_SCHEDULES; i++) {
+      if (schedules[i].hour == removeHour && schedules[i].minute == removeMinute) {
+        schedules[i].hour = -1;
+        schedules[i].minute = -1;
+        schedules[i].activated = false;
+        scheduleFound = true;
+        break;
+      }
+    }
+
+    if (scheduleFound) {
+      server.send(200, "text/plain", "Servo schedule removed");
+      Serial.printf("Servo schedule removed: %02d:%02d\n", removeHour, removeMinute);
+    } else {
+      server.send(404, "text/plain", "Schedule not found");
+      Serial.printf("Schedule not found: %02d:%02d\n", removeHour, removeMinute);
+    }
   } else {
     server.send(400, "text/plain", "Missing parameters");
   }
 }
 
 void handleRoot() {
-  server.send(200, "text/plain", "Use /start to start the camera, /stop to stop the camera, /servoLeft to move servo left, and /servoRight to move servo right, /setServoSchedule to schedule servo movement");
+  String message = "Use /start to start the camera, /stop to stop the camera, /servoLeft to move servo left, /servoRight to move servo right, /setServoSchedule to schedule servo movement, /removeServoSchedule to remove a scheduled servo movement";
+  server.send(200, "text/plain", message);
 }
+
+void checkMidnight() {
+  timeClient.update();
+  int currentHour = timeClient.getHours();
+  int currentMinute = timeClient.getMinutes();
+
+  if (currentHour == 0 && currentMinute == 0) {  // Es medianoche
+    for (int i = 0; i < MAX_SCHEDULES; i++) {
+      schedules[i].activated = false;
+    }
+    Serial.println("All schedules reset at midnight");
+  }
+}
+
 
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
-  
+
   Serial.begin(115200);
   Serial.println();
 
@@ -192,12 +298,11 @@ void setup() {
     ESP.restart();
   }
   Serial.println("Connected to WiFi!");
-
   Serial.println(WiFi.localIP());
 
   Serial.println();
   Serial.print("Set the camera ESP32 CAM...");
-  
+
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -256,11 +361,20 @@ void setup() {
   server.on("/servoRight", handleServoRight);
   server.on("/servoAction", handleServoAction);
   server.on("/setServoSchedule", handleSetServoSchedule);
+  server.on("/removeServoSchedule", handleRemoveServoSchedule);
 
   server.begin();
   Serial.println("HTTP server started");
 
+  // Initialize schedules
+  for (int i = 0; i < MAX_SCHEDULES; i++) {
+    schedules[i].hour = -1;
+    schedules[i].minute = -1;
+    schedules[i].activated = false;
+  }
+
   servoTicker.attach(5, checkServoSchedule); 
+  midnightTicker.attach(60, checkMidnight); // Chequear medianoche cada minuto
 }
 
 void loop() {
