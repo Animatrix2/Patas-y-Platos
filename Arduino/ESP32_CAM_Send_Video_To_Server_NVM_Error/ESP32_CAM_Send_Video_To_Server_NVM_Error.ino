@@ -408,8 +408,8 @@ void setup() {
 
   loadSchedules();
 
-  servoTicker.attach(5, checkServoSchedule); 
-  midnightTicker.attach(60, checkMidnight); // Chequear medianoche cada minuto
+  servoTicker.attach(30, checkServoSchedule); 
+  //midnightTicker.attach(60, checkMidnight); // Chequear medianoche cada minuto
 }
 
 void loop() {
