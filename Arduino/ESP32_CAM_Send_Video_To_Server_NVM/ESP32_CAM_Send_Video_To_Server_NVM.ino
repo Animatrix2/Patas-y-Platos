@@ -199,10 +199,9 @@ void checkServoSchedule() {
 }
 
 void handleSetServoSchedule() {
-  if (server.hasArg("hora") && server.hasArg("minuto") && server.hasArg("duracion")) {
+  if (server.hasArg("hora") && server.hasArg("minuto")) {
     setHour = server.arg("hora").toInt();
     setMinute = server.arg("minuto").toInt();
-    moveDuration = server.arg("duracion").toInt() * 1000;
 
     // Buscar un espacio libre en el arreglo de horarios para almacenar el nuevo horario
     for (int i = 0; i < MAX_SCHEDULES; i++) {
@@ -276,6 +275,29 @@ void loadSchedules() {
     schedules[i].minute = preferences.getInt(keyMinute.c_str(), -1);
     schedules[i].activated = preferences.getBool(keyActivated.c_str(), false);
   }
+
+  preferences.end();
+}
+
+void handleSetMoveDuration(){
+  if (myServo.attached() && server.hasArg("delay")) {
+    moveDuration = server.arg("delay").toInt() * 1000;
+    Serial.printf("Servo move duration set to %d seconds\n", moveDuration / 1000);
+    saveDuration();
+  }
+}
+
+void saveDuration(){
+  preferences.begin("duration", false);
+  String keyDuration = "moveDuration";
+  preferences.putInt(keyDuration.c_str(), moveDuration);
+  preferences.end();
+}
+
+void loadDuration(){
+  preferences.begin("duration", false);
+  String keyDuration = "moveDuration";
+  moveDuration = preferences.getInt(keyDuration.c_str(), -1);
   preferences.end();
 }
 
@@ -377,6 +399,7 @@ void setup() {
   server.on("/servoAction", handleServoAction);
   server.on("/setServoSchedule", handleSetServoSchedule);
   server.on("/removeServoSchedule", handleRemoveServoSchedule);
+  server.on("/setMoveDuration", handleSetMoveDuration);
 
   server.begin();
   Serial.println("HTTP server started");
@@ -389,6 +412,7 @@ void setup() {
   }
 
   loadSchedules();
+  loadDuration();
 
   servoTicker.attach(30, checkServoSchedule); 
   //midnightTicker.attach(60, checkMidnight); // Chequear medianoche cada minuto
