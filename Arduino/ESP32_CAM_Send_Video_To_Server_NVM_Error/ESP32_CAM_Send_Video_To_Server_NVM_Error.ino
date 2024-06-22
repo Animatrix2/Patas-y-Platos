@@ -55,7 +55,7 @@ Schedule schedules[MAX_SCHEDULES];
 
 void sendFrameToServer(camera_fb_t * fb) {
   if (!fb) {
-    Serial.println("Camera capture failed: Frame buffer is null");
+    Serial.println("Camera capture failed");
     return;
   }
 
@@ -109,24 +109,31 @@ void handleStopCamera() {
 }
 
 void handleServoLeft() {
-  servoPos -= 10;
-  if (servoPos < 0) servoPos = 0;
-  myServo.write(servoPos);
-  server.send(200, "text/plain", "Servo moved left");
-  Serial.println("Servo moved left");
+  if (myServo.attached()) {
+    servoPos -= 10;
+    if (servoPos < 0) servoPos = 0;
+    myServo.write(servoPos);
+    server.send(200, "text/plain", "Servo moved left");
+    Serial.println("Servo moved left");
+  } else {
+    Serial.println("Servo not attached!");
+  }
 }
 
 void handleServoRight() {
-  servoPos += 10;
-  if (servoPos > 180) servoPos = 180;
-  myServo.write(servoPos);
-  server.send(200, "text/plain", "Servo moved right");
-  Serial.println("Servo moved right");
+  if (myServo.attached()) {
+    servoPos += 10;
+    if (servoPos > 180) servoPos = 180;
+    myServo.write(servoPos);
+    server.send(200, "text/plain", "Servo moved right");
+    Serial.println("Servo moved right");
+  } else {
+    Serial.println("Servo not attached!");
+  }
 }
 
-
 void handleServoAction() {
-  if (server.hasArg("delay")) {
+  if (myServo.attached() && server.hasArg("delay")) {
     int delayTime = server.arg("delay").toInt() * 1000;
     
     if (delayTime > 0) {
@@ -143,13 +150,14 @@ void handleServoAction() {
       myServo.write(servoPos);
       server.send(200, "text/plain", "Servo moved left after delay");
       Serial.println("Servo moved left");
-      return;
     }
+  } else {
+    Serial.println("Servo not attached or missing delay parameter!");
   }
 }
 
 void moveServoAutomatically() {
-  if (moveServo) {
+  if (myServo.attached() && moveServo) {
     servoPos += 90;
     if (servoPos > 180) servoPos = 180;
     myServo.write(servoPos);
@@ -167,75 +175,51 @@ void moveServoAutomatically() {
 }
 
 void checkServoSchedule() {
+  if (myServo.attached()) {
+    timeClient.update(); // Actualizar la hora
 
-  timeClient.update(); // Actualizar la hora
+    int currentHour = timeClient.getHours();
+    int currentMinute = timeClient.getMinutes();
 
-  int currentHour = timeClient.getHours();
+    Serial.printf("Current Time: %02d:%02d\n", currentHour, currentMinute);
 
-  int currentMinute = timeClient.getMinutes();
+    for (int i = 0; i < MAX_SCHEDULES; i++) {
+      Serial.printf("Checking Schedule %d: %02d:%02d, activated: %d\n", i, schedules[i].hour, schedules[i].minute, schedules[i].activated);
 
-  Serial.printf("Current Time: %02d:%02d\n", currentHour, currentMinute);
-
-  for (int i = 0; i < MAX_SCHEDULES; i++) {
-
-    Serial.printf("Checking Schedule %d: %02d:%02d, activated: %d\n", i, schedules[i].hour, schedules[i].minute, schedules[i].activated);
-
-    if (schedules[i].hour == currentHour && schedules[i].minute == currentMinute && !schedules[i].activated) {
-
-      moveServo = true;
-
-      schedules[i].activated = true; // Marcar como activado para este horario
-
-      Serial.println("Schedule Time");
-
-      break; // Solo activamos una vez por horario
-
+      if (schedules[i].hour == currentHour && schedules[i].minute == currentMinute && !schedules[i].activated) {
+        moveServo = true;
+        schedules[i].activated = true; // Marcar como activado para este horario
+        Serial.println("Schedule Time");
+        break; // Solo activamos una vez por horario
+      }
     }
-
+  } else {
+    Serial.println("Servo not attached!");
   }
-
 }
 
 void handleSetServoSchedule() {
-
   if (server.hasArg("hora") && server.hasArg("minuto") && server.hasArg("duracion")) {
-
     setHour = server.arg("hora").toInt();
-
     setMinute = server.arg("minuto").toInt();
-
     moveDuration = server.arg("duracion").toInt() * 1000;
 
     // Buscar un espacio libre en el arreglo de horarios para almacenar el nuevo horario
-
     for (int i = 0; i < MAX_SCHEDULES; i++) {
-
       if (schedules[i].hour == -1 && schedules[i].minute == -1) {
-
         schedules[i].hour = setHour;
-
         schedules[i].minute = setMinute;
-
         schedules[i].activated = false; // Inicializar como no activado
-
         saveSchedules();
-
         break;
-
       }
-
     }
 
     server.send(200, "text/plain", "Servo schedule set");
-
     Serial.printf("Servo schedule set to %02d:%02d for %d seconds\n", setHour, setMinute, moveDuration / 1000);
-
   } else {
-
     server.send(400, "text/plain", "Missing parameters");
-
   }
-
 }
 
 void handleRemoveServoSchedule() {
@@ -295,7 +279,6 @@ void loadSchedules() {
   preferences.end();
 }
 
-
 void handleRoot() {
   String message = "Use /start to start the camera, /stop to stop the camera, /servoLeft to move servo left, /servoRight to move servo right, /setServoSchedule to schedule servo movement, /removeServoSchedule to remove a scheduled servo movement";
   server.send(200, "text/plain", message);
@@ -313,7 +296,6 @@ void checkMidnight() {
     Serial.println("All schedules reset at midnight");
   }
 }
-
 
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
@@ -359,11 +341,11 @@ void setup() {
   config.pixel_format = PIXFORMAT_JPEG;
 
   if(psramFound()){
-    config.frame_size = FRAMESIZE_SVGA;
+    config.frame_size = FRAMESIZE_HQVGA;
     config.jpeg_quality = 20;  
     config.fb_count = 1;
   } else {
-    config.frame_size = FRAMESIZE_SVGA;
+    config.frame_size = FRAMESIZE_HQVGA;
     config.jpeg_quality = 20; 
     config.fb_count = 1;
   }
@@ -427,4 +409,3 @@ void loop() {
 
   moveServoAutomatically();
 }
-
