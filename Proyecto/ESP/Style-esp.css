@@ -1,0 +1,125 @@
+
+body {
+    background-color: bisque;
+}
+@media (min-width: 480px) and (max-width: 900px) {
+    .contenedor-botones{
+        display:grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+        background-color: beige;
+        margin: auto;
+        width: 75%;
+        grid-row-gap: 25px;
+        padding-bottom: 25px;
+    }
+    #botone-1{ 
+        grid-column-start: 1;
+        grid-row: 1;
+        background-color: rgb(154, 247, 162);
+        width: 60%;
+        border-radius: 10px;
+        margin: auto;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    #botone-2{ 
+        grid-column-start: 2;
+        grid-row: 1;
+        background-color: rgb(255, 57, 57);
+        width: 60%;
+        border-radius: 10px;
+        margin: auto;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    #boton-3{
+        grid-column-start: 1;
+        grid-row: 2;
+        background-color: rgb(80, 233, 253);
+        width: 60%;
+        
+       
+    }
+    #boton-4{
+        grid-column-start: 2;
+        grid-row: 2;
+        background-color: rgb(247, 99, 0);
+        width: 60%;
+        
+        border-radius: 10px;
+        margin: auto;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    #video-frame {
+        display: flexbox;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        max-width: 640px;
+        margin: auto;
+        padding: auto;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .Programador{
+        display: grid;
+        grid-template-columns: 3;
+        grid-template-rows: 4;
+    }
+    .elh2{
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        text-align: center;
+    }
+    .primero{
+        grid-column-start: 1;
+        grid-row-start: 2;
+        text-align: center;
+    }
+    #hora{
+        grid-column-start: 2;
+        grid-row-start: 2;
+        text-align: center;
+    }
+    .segundo{
+        grid-column-start: 1;
+        grid-row-start: 3;
+        text-align: center;
+    }
+    #minuto{
+        grid-column-start: 2;
+        grid-row-start: 3;
+        text-align: center;
+    }
+    .tercero{
+        grid-column-start: 1;
+        grid-row-start: 4;
+        text-align: center;
+    }
+    #delay{
+        grid-column-start: 2;
+        grid-row-start: 4;
+        text-align: center;
+    }
+    .boton-accionar{
+        grid-column-start: 1;
+        grid-row-start: 5;
+        text-align: center;
+        border-radius: 10px;
+        margin: auto;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .boton-programar{
+        grid-column-start: 2;
+        grid-row-start: 5;
+        text-align: center;
+    }
+    
+}
