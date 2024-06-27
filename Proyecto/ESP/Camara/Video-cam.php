@@ -21,40 +21,7 @@
         <img id="video-frame" src="uploads/current_frame.jpg" alt="Video Frame">
 
 
-    <div class="Programador">
-        <div class="elh2">
-        <h2 >Programar Horarios de Comida</h2>
-        </div>
-        
-            <div class="primero">
-            <abbr title="Hora en que se alimentara su mascota">
-                <label for="hora">Hora</label>
-                </abbr>
-            </div>
-                <input type="number" id="hora">
-        
-            <div class="segundo">
-            <abbr title="En que minuto de la hora seleccionada quiere alimentarle">
-                <label for="minuto">Minuto</label>
-                </abbr>
-            </div>
-                <input type="number" id="minuto">
-            
-            <div class="tercero">
-            <abbr title="Cuantos segundos de alimento le dara de comer">
-                <label for="delay">Duración (seg)</label>
-                </abbr>
-            </div>
-                <input type="number" id="delay">
-                
-        <br>
-        <div class="boton-accionar">
-            <button onclick="Accionar()" id="boton-3">Accionar</button>
-        </div>
-        <div class="boton-programar">
-            <button onclick="Programar()" id="boton-4">Programar</button>
-        </div>
-    </div>
+   
     <script>
         function refreshFrame() {
             const frame = document.getElementById('video-frame');

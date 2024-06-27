@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Bienvenida</title>
-    <meta http-equiv="Refresh" content="5;ESP/Video-cam.php" />
+    <meta http-equiv="Refresh" content="5;ESP/Pagina-inicio.html" />
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
