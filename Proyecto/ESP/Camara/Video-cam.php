@@ -6,10 +6,14 @@
     <title>ESP32-CAM Video Stream</title>
     <link rel="stylesheet" href="Style-esp.css">
     <style>
+        body{
+            background-color: green;
+        }
   
 </style>
 </head>
 <body>
+
     <h1 style="text-align: center;">Camara y progamacion del Pet-Penser</h1>
     <div class="contenedor-botones">
         <button onclick="startCamera()" id="botone-1">Start Camera</button>
