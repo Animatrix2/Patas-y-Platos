@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         echo "La cuenta ya existe";
     } else {
         // Encriptar la contraseña antes de guardarla 
-        
+        $password_hashed = password_hash($password, PASSWORD_BCRYPT);
 
         // Insertar el nuevo usuario en la base de datos
         $sql_add = "INSERT INTO `users` (`username`, `password`) VALUES ('$username', '$password_hashed')";
