@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet-Camera</title>
-    <link rel="stylesheet" href="style-esp.css">
+    <link rel="stylesheet" href="Style-esp.css">
 </head>
 <body>
-    <h1>Pet-Camera mas furros que nunca</h1>
+    <h1>Pet-Camera</h1>
+    <div class="contenedor-botones">
+       <!-- <button onclick="startCamera()" id="botone-1">Start Camera</button>
+        <button onclick="stopCamera()" id="botone-2">Stop Camera</button> -->
+    </div>
     <div class="image-container">
         <img id="video-frame" src="uploads/current_frame.jpg" alt="Video Frame" class="background-standby">
     </div>
