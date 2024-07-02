@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comida</title>
-    <link rel="stylesheet" href="Estilo-horario.css">
+    <link rel="stylesheet" href="estilo-horario.css">
 </head>
 <?php
 $mensaje = "";
@@ -74,7 +74,7 @@ $tablaHTML .= "</table>";
 ?>
 
 <body>
-
+    <a href="../Pagina-inicio.html"><button><-- atras</button></a>
     <div class="ConenedorDeTodo">
         <div id="Titulo"><h1>Horarios</h1></div>
         <div class="Tabla-Horarios">
@@ -85,11 +85,14 @@ $tablaHTML .= "</table>";
         <div class="boton-accionar">
             <button onclick="Accionar()" id="boton-3"><img src="https://cdn-icons-png.flaticon.com/512/1004/1004166.png" alt="" class="Botttton" align=center></button>
         </div>
-        <div >
-            <button id="open">Modificar-Eliminar</button>
+        <div class="Boton-Abrir">
+            <button id="open">Agregar</button>
         </div>
     </div>
 
+
+
+    
     <div id="modal_container" class="modal-container">
     
         <div class="modal">
@@ -102,7 +105,7 @@ $tablaHTML .= "</table>";
                     <input type="number" id="minuto" name="minutos" require>
                     <br>
                     <br>
-                <input type="submit" class="boton" name="listo" value="agregar">
+                    <button onclick="Programar()" class="boton" name="listo" >Agregar</button>
                 <button id="close">Cerrar</button>
             </div>
         </div>
@@ -113,44 +116,7 @@ $tablaHTML .= "</table>";
 <script src="script.js"></script>
 
 <script>
-        function refreshFrame() {
-            const frame = document.getElementById('video-frame');
-            const timestamp = new Date().getTime(); // Timestamp to prevent caching
-            frame.src = 'uploads/current_frame.jpg?' + timestamp;
-        }
-
-        setInterval(refreshFrame, 33); // Refresh at approximately 30 fps (1000ms / 30 ≈ 33ms)
-
-        function sendRequest(url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-        function startCamera() {
-            const esp32Url = 'http://192.168.0.10/start'; // Replace with your ESP32-CAM IP address
-            sendRequest(esp32Url);
-        }
-
-        function stopCamera() {
-            const esp32Url = 'http://192.168.0.10/stop'; // Replace with your ESP32-CAM IP address
-            sendRequest(esp32Url);
-        }
-
-        function servoLeft() {
-            const esp32Url = 'http://192.168.0.10/servoLeft'; // Replace with your ESP32-CAM IP address
-            sendRequest(esp32Url);
-        }
-
-        function servoRight() {
-            const esp32Url = 'http://192.168.0.10/servoRight'; // Replace with your ESP32-CAM IP address
-            sendRequest(esp32Url);
-        }
+    
 
         function Accionar() {
             const input = document.getElementById("delay");
