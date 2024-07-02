@@ -14,10 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     if (mysqli_num_rows($result_check) > 0) {
         echo "La cuenta ya existe";
     } else {
-       
 
         // Insertar el nuevo usuario en la base de datos
-        $sql_add = "INSERT INTO `users` (`username`, `password`) VALUES ('$username', '$password_hashed')";
+        $sql_add = "INSERT INTO `users` (`username`, `password`) VALUES ('$username', '$password')";
         $query = mysqli_query($conn, $sql_add);
 
         if ($query) {
