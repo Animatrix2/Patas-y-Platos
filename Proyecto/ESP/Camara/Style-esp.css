@@ -1,73 +1,65 @@
 body {
-  background-color: bisque;
-  font-size: 16px; /* Set a base font size for better scaling */
+  background: linear-gradient(to right, #f5f5f5, #d3e5ff); /* Gradient background for more visual appeal */
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Fun font for the interface */
+  color: #333; /* Darker text for contrast */
+  margin: 0;
+  padding: 0;
 }
 
-/* Media query for screens wider than 480px */
-@media (min-width: 480px) {
-  .contenedor-botones {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Flexible grid with min-width for buttons */
-      grid-gap: 25px;
-      margin: auto;
-      padding-bottom: 25px;
-  }
-
-  #botone-1, #botone-2 {
-      background-color: rgb(154, 247, 162), rgb(255, 57, 57), rgb(80, 233, 253), rgb(247, 99, 0);
-      width: 100%; /* Make buttons full width on larger screens */
-      border-radius: 10px;
-      margin: 0 auto 10px; /* Adjust margins for spacing */
-      font-size: 1.2rem; /* Adjust font size relative to base */
-      padding: 15px; /* Add padding for better button appearance */
-  }
-
-  #video-frame {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 80%;
-      max-width: 640px;
-      margin: auto;
-  }
-
-  .Programador {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Flexible grid for programmer section */
-      grid-gap: 10px; /* Adjust grid gap for smaller screens */
-  }
-
-  .elh2, .primero, .segundo, .tercero {
-      text-align: center; /* Maintain centered text */
-  }
-
-  .elh2 {
-      grid-column: span 2; /* Span 2 columns on larger screens */
-  }
-
-  #hora, #minuto, #delay {
-      font-size: 1.5rem; /* Adjust font size for readability */
-  }
-
-  .boton-accionar, .boton-programar {
-      background-color: #007bff, #28a745; /* Example button colors */
-      color: white; /* Example button text color */
-      border: none; /* Remove border for cleaner look */
-      padding: 10px 20px; /* Adjust padding for buttons */
-      margin: 5px auto; /* Adjust button margins */
-      font-size: 1rem; /* Adjust font size for buttons */
-      cursor: pointer; /* Indicate clickable buttons */
-  }
+h1 {
+  text-align: center;
+  font-size: 2.5em;
+  color: #ff6f61; /* Friendly, warm color */
+  text-shadow: 1px 1px 2px #fff;
+  margin: 20px 0;
 }
 
-/* Centering the switch */
+.contenedor-botones {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+#botone-1, #botone-2 {
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#botone-1:hover, #botone-2:hover {
+  background-color: #ff856c;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+#video-frame {
+  width: 80%;
+  max-width: 640px;
+  border: 5px solid #ff6f61;
+  border-radius: 15px;
+  transition: filter 0.4s;
+}
+
+.background-standby {
+  filter: grayscale(100%);
+}
+
 .switch-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-/* The switch - the box around the slider */
 .switch {
   font-size: 17px;
   position: relative;
@@ -77,109 +69,60 @@ body {
   user-select: none;
 }
 
-/* Hide default HTML checkbox */
 .switch .cb {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .toggle {
   position: absolute;
   cursor: pointer;
   width: 100%;
   height: 100%;
-  background-color: #373737;
-  border-radius: 0.1em;
-  transition: 0.4s;
+  background-color: #ff6f61;
+  border-radius: 1.25em;
+  transition: background-color 0.4s;
+}
+
+.toggle::before {
+  position: absolute;
+  content: "";
+  height: 2.3em;
+  width: 2.3em;
+  left: 0.1em;
+  bottom: 0.1em;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s;
+}
+
+.switch input:checked + .toggle {
+  background-color: #48c78e;
+}
+
+.switch input:checked + .toggle::before {
+  transform: translateX(2.5em);
+}
+
+.toggle .left, .toggle .right {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: white;
   text-transform: uppercase;
-  font-weight: 700;
-  overflow: hidden;
-  box-shadow: -0.3em 0 0 0 #373737, -0.3em 0.3em 0 0 #373737,
-      0.3em 0 0 0 #373737, 0.3em 0.3em 0 0 #373737, 0 0.3em 0 0 #373737;
 }
 
-.toggle > .left {
-  position: absolute;
-  display: flex;
-  width: 50%;
-  height: 88%;
-  background-color: #f3f3f3;
-  color: #373737;
+.toggle .left {
   left: 0;
-  bottom: 0;
-  align-items: center;
-  justify-content: center;
-  transform-origin: right;
-  transform: rotateX(10deg);
-  transform-style: preserve-3d;
-  transition: all 150ms;
 }
 
-.left::before {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background-color: rgb(206, 206, 206);
-  transform-origin: center left;
-  transform: rotateY(90deg);
-}
-
-.left::after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background-color: rgb(112, 112, 112);
-  transform-origin: center bottom;
-  transform: rotateX(90deg);
-}
-
-.toggle > .right {
-  position: absolute;
-  display: flex;
-  width: 50%;
-  height: 88%;
-  background-color: #f3f3f3;
-  color: rgb(206, 206, 206);
-  right: 1px;
-  bottom: 0;
-  align-items: center;
-  justify-content: center;
-  transform-origin: left;
-  transform: rotateX(10deg) rotateY(-45deg);
-  transform-style: preserve-3d;
-  transition: all 150ms;
-}
-
-.right::before {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background-color: rgb(206, 206, 206);
-  transform-origin: center right;
-  transform: rotateY(-90deg);
-}
-
-.right::after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background-color: rgb(112, 112, 112);
-  transform-origin: center bottom;
-  transform: rotateX(90deg);
-}
-
-.switch input:checked + .toggle > .left {
-  transform: rotateX(10deg) rotateY(45deg);
-  color: rgb(206, 206, 206);
-}
-
-.switch input:checked + .toggle > .right {
-  transform: rotateX(10deg) rotateY(0deg);
-  color: #487bdb;
+.toggle .right {
+  right: 0;
+  color: #333;
 }

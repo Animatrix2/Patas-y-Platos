@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESP32-CAM Video Stream</title>
-    <link rel="stylesheet" href="Style-esp.css">
+    <title>Pet-Camera</title>
+    <link rel="stylesheet" href="style-esp.css">
 </head>
 <body>
-    <h1 style="text-align: center;">Camara y programacion del Pet-Penser</h1>
-    <div class="contenedor-botones">
-       <!-- <button onclick="startCamera()" id="botone-1">Start Camera</button>
-        <button onclick="stopCamera()" id="botone-2">Stop Camera</button> -->
-    </div>
-    <div>
-        <img id="video-frame" src="uploads/current_frame.jpg" alt="Video Frame">
+    <h1>Pet-Camera mas furros que nunca</h1>
+    <div class="image-container">
+        <img id="video-frame" src="uploads/current_frame.jpg" alt="Video Frame" class="background-standby">
     </div>
     <div class="switch-container">
         <label class="switch">
-         <input class="cb" type="checkbox" />
+            <input class="cb" type="checkbox" id="camera-toggle" />
             <span class="toggle">
-            <span class="left">off</span>
-            <span class="right">on</span>
-         </span>
+                <span class="left">off</span>
+                <span class="right">on</span>
+            </span>
         </label>
     </div>
 
@@ -48,13 +44,22 @@
         function startCamera() {
             const esp32Url = 'http://192.168.0.10/start'; // Replace with your ESP32-CAM IP address
             sendRequest(esp32Url);
+            document.getElementById('video-frame').classList.remove('background-standby');
         }
 
         function stopCamera() {
             const esp32Url = 'http://192.168.0.10/stop'; // Replace with your ESP32-CAM IP address
             sendRequest(esp32Url);
+            document.getElementById('video-frame').classList.add('background-standby');
         }
 
+        document.getElementById('camera-toggle').addEventListener('change', function() {
+            if (this.checked) {
+                startCamera();
+            } else {
+                stopCamera();
+            }
+        });
     </script>
 </body>
 </html>
