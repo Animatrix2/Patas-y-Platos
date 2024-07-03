@@ -36,7 +36,9 @@ button {
 }
 
 .modal {
-
+    display: grid;
+    grid-template-columns: 3;
+    grid-template-rows: 4;
     background-color: #fff;
     width: 600px;
     max-width: 100%;
@@ -47,6 +49,19 @@ button {
 }
 
 
+.modal{
+    grid-column-start: 1;
+    grid-column-end: 1;
+}
+
+#Horarios{
+    grid-column-start: 1;
+    grid-row-start:2 ;
+}
+#Minutos{
+    grid-column-start: 1;
+    grid-row-start:3 ;
+}
 
 #tabla{
     grid-column-start: 2;
@@ -55,24 +70,20 @@ button {
     grid-row-end: 4;
 }
 /* Chrome, Safari, Edge, Opera */
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+
 #Hora input[type="number"] {
-    grid-column-start: 1;
-    grid-column-end: 2;
     margin-bottom: 10px;
     width: 50px;
     height: 90px;
     text-align: center;
     font-size: 32px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-
-
-    
 }
 .boton, #close {
     margin-top: 10px;
@@ -118,7 +129,7 @@ border-radius: 10px;
 
 }
 
-#tabla-horarios { 
+table { 
     width: 100%;
     border-style: solid; 
     border-top-width: 3px; 
@@ -151,7 +162,7 @@ border-radius: 10px;
 }
 .Boton-Abrir{
     grid-column-start:1 ;
-    grid-column-end: 2;
+    grid-column-end: 3;
     grid-row-start: 3;
     padding: 3%;
     margin: auto;
@@ -167,42 +178,3 @@ border-radius: 10px;
     background-color: #fdff9b;
     color: black;
 }
-.Porciones{
-    grid-column-start:2 ;
-    grid-column-end:3 ;
-    grid-row-start: 3;
-    padding: 3%;
-    margin: auto;
-    text-align: center;
- }
-
-
- .modal_container{
-    display: grid;
-    grid-template-columns: 3;
-    grid-template-rows: 2;
-
- }
- #delay{
-    width: 25px;
-    height: 50px;
-    font-size: 20px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
- }
-
-
- #agregar-horas{
-    margin: auto;
-    text-align: center;
-
- }
- #porcioness{
-    border: 0;
-    background-color: rgb(102, 187, 243);
-    margin-top: 10px;
-    width: 100px;
-    text-align: center;
-    padding: 10px;
- }
-
-
