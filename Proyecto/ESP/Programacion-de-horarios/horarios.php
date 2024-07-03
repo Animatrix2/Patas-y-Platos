@@ -51,13 +51,44 @@ if (isset($_REQUEST["listo"])) {
         $mensaje = "Por favor, complete todos los campos.";
     }
 }
+$idPorcion = 1;
+$porcionSql = "SELECT Porcion FROM porciones WHERE IdPorcion = $idPorcion";
+$porcionResultado = $conexion->query($porcionSql);
+$porcionValor = "";
+if ($porcionResultado && $porcionResultado->num_rows > 0) {
+    $fila = $porcionResultado->fetch_assoc();
+    $porcionValor = $fila['Porcion'];
+} else {
+    $porcionValor = "No se encontró el valor";
+}
+if (isset($_REQUEST["editar"])){
+    $textsql= "UPDATE `Porcion` SET 
+    IdPorcion= '$idPorcion',
+    porcionValor = '$porcionValor'
+    WHERE `IdPorcion` = $idPorcion;";
+    $consulta = mysqli_query($conn,$textsql);
+    if ($consulta){
+        $mensaje="Editado";
+    }
+    else{
+        $mensaje="No :|";
+    }
+}
+
+
+
+
+
+
+
+
 
 // Consulta para obtener los horarios de la tabla horarios
 $sql = "SELECT IdHorarios, Hora, Minuto FROM horarios";
 $resultado = $conexion->query($sql);
 
 // Variable para almacenar la tabla HTML
-$tablaHTML = "<table border='0' cellspacing='0' cellpadding='0'>";
+$tablaHTML = "<table border='0' cellspacing='0' cellpadding='0' id='tabla-horarios'>";
 $tablaHTML .= "<tr><th colspan='4'>Horarios</th></tr>";
 $tablaHTML .= "<tr><td>Hora</td><td></td><td>Minuto</td><td>Acción</td></tr>";
 
@@ -73,13 +104,12 @@ if ($resultado->num_rows > 0) {
 $tablaHTML .= "</table>";
 ?>
 
-<body>
-    <a href="../Pagina-inicio.html"><button><-- atras</button></a>
+<a href="../Pagina-inicio.html"><button><-- atras</button></a>
     <div class="ConenedorDeTodo">
         <div id="Titulo"><h1>Horarios</h1></div>
         <div class="Tabla-Horarios">
             <div class="tabla">
-                <?php echo $tablaHTML ?>
+                <?php echo $tablaHTML; ?>
             </div>
         </div>
         <div class="boton-accionar">
@@ -90,31 +120,49 @@ $tablaHTML .= "</table>";
         </div>
     </div>
 
-
-
-    
-    <div id="modal_container" class="modal-container">
-    
-        <div class="modal">
-            <h1>Agregar Nuevos Horarios</h1>
+    <div id="modal-delay" class="modal-container">
+        <div class="modal-content">
             <form action="" method="POST">
-            <div id="Hora">
-                
-                    <input type="number" id="hora" name="horas" require> 
-                    <label for="minuto">:</label>
-                    <input type="number" id="minuto" name="minutos" require>
-                    <br>
-                    <br>
-                    <button onclick="Programar()" class="boton" name="listo" >Agregar</button>
-                <button id="close">Cerrar</button>
-            </div>
+               
+                <button type="button" id="close-delay">Cerrar</button>
+            </form>
         </div>
     </div>
-</form>
-</form>
 
-<script src="script.js"></script>
+    <div id="modal_container" class="modal-container">
+        <div class="modal">
+            <h1>Agregar Horarios y Modificar Porciones</h1>
+            <h2>Horarios    -     Porciones</h2>
+            <form action="" method="POST">
+                <div id="Hora">
+                    <table id="agregar-horas">
+                        <tr>
+                            <td>
+                                <input type="number" id="hora" max="23" min="0" name="horas" >
+                                <label for="minuto" style="font-size: 50px;">:</label>
+                                <input type="number" id="minuto" min="0" max="59" name="minutos" >
+                                <br>
+                                <button type="submit" class="boton" name="listo">Agregar</button>
+                            </td>
+                            <td>
+                                
+                                <input type="number" id="delay" name="delay" value="<?php echo $porcionValor; ?>">
+                                <br>
+                                <button onclick="Programar()" type="submit" name="programar" id="porcioness">Programar</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <div>
+                        
+                    </div>
+                    <button type="button" id="close">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <script src="script.js"></script>
 <script>
     
 
