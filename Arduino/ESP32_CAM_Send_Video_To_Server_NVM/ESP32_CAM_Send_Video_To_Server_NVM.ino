@@ -39,7 +39,7 @@ bool moveServo = false;
 Ticker servoReturnTicker;
 
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, "pool.ntp.org", -3 * 3600, 60000); // GMT-3 for Buenos Aires, 1-minute update interval
+NTPClient timeClient(ntpUDP, "pool.ntp.org", -3 * 3600, 60000);  // GMT-3 for Buenos Aires, 1-minute update interval
 
 // Definir estructura para los horarios programados
 struct Schedule {
@@ -53,7 +53,7 @@ const int MAX_SCHEDULES = 5;  // Ajustar según la cantidad deseada
 Schedule schedules[MAX_SCHEDULES];
 
 
-void sendFrameToServer(camera_fb_t * fb) {
+void sendFrameToServer(camera_fb_t *fb) {
   if (!fb) {
     Serial.println("Camera capture failed");
     return;
@@ -62,7 +62,7 @@ void sendFrameToServer(camera_fb_t * fb) {
   if (client.connect(serverName.c_str(), serverPort)) {
     String head = "--dataMarker\r\nContent-Disposition: form-data; name=\"imageFile\"; filename=\"frame.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n";
     String boundary = "\r\n--dataMarker--\r\n";
-    
+
     uint32_t imageLen = fb->len;
     uint32_t dataLen = head.length() + boundary.length();
     uint32_t totalLen = imageLen + dataLen;
@@ -73,7 +73,7 @@ void sendFrameToServer(camera_fb_t * fb) {
     client.println("Content-Type: multipart/form-data; boundary=dataMarker");
     client.println();
     client.print(head);
-  
+
     uint8_t *fbBuf = fb->buf;
     size_t fbLen = fb->len;
     for (size_t n = 0; n < fbLen; n += 1024) {
@@ -84,7 +84,7 @@ void sendFrameToServer(camera_fb_t * fb) {
         size_t remainder = fbLen % 1024;
         client.write(fbBuf, remainder);
       }
-    }   
+    }
     client.print(boundary);
     esp_camera_fb_return(fb);
   } else {
@@ -135,7 +135,7 @@ void handleServoRight() {
 void handleServoAction() {
   if (myServo.attached() && server.hasArg("delay")) {
     int delayTime = server.arg("delay").toInt() * 1000;
-    
+
     if (delayTime > 0) {
       servoPos += 90;
       if (servoPos > 180) servoPos = 180;
@@ -176,7 +176,7 @@ void moveServoAutomatically() {
 
 void checkServoSchedule() {
   if (myServo.attached()) {
-    timeClient.update(); // Actualizar la hora
+    timeClient.update();  // Actualizar la hora
 
     int currentHour = timeClient.getHours();
     int currentMinute = timeClient.getMinutes();
@@ -188,9 +188,16 @@ void checkServoSchedule() {
 
       if (schedules[i].hour == currentHour && schedules[i].minute == currentMinute && !schedules[i].activated) {
         moveServo = true;
-        schedules[i].activated = true; // Marcar como activado para este horario
+        schedules[i].activated = true;  // Marcar como activado para este horario
+        preferences.begin("schedules", false);
+
+        //Modifica el estado de los horarios de la MNV
+        String keyActivated = "activated" + String(i);
+        preferences.putBool(keyActivated.c_str(), true);
+
+        preferences.end();
         Serial.println("Schedule Time");
-        break; // Solo activamos una vez por horario
+        break;  // Solo activamos una vez por horario
       }
     }
   } else {
@@ -208,7 +215,7 @@ void handleSetServoSchedule() {
       if (schedules[i].hour == -1 && schedules[i].minute == -1) {
         schedules[i].hour = setHour;
         schedules[i].minute = setMinute;
-        schedules[i].activated = false; // Inicializar como no activado
+        schedules[i].activated = false;  // Inicializar como no activado
         saveSchedules();
         break;
       }
@@ -261,6 +268,7 @@ void saveSchedules() {
     preferences.putInt(keyHour.c_str(), schedules[i].hour);
     preferences.putInt(keyMinute.c_str(), schedules[i].minute);
     preferences.putBool(keyActivated.c_str(), schedules[i].activated);
+    Serial.printf("Saved Schedule %d: %02d:%02d, activated: %d\n", i, schedules[i].hour, schedules[i].minute, schedules[i].activated);
   }
   preferences.end();
 }
@@ -274,12 +282,12 @@ void loadSchedules() {
     schedules[i].hour = preferences.getInt(keyHour.c_str(), -1);
     schedules[i].minute = preferences.getInt(keyMinute.c_str(), -1);
     schedules[i].activated = preferences.getBool(keyActivated.c_str(), false);
+    Serial.printf("Loaded Schedule %d: %02d:%02d, activated: %d\n", i, schedules[i].hour, schedules[i].minute, schedules[i].activated);
   }
-
   preferences.end();
 }
 
-void handleSetMoveDuration(){
+void handleSetMoveDuration() {
   if (myServo.attached() && server.hasArg("delay")) {
     moveDuration = server.arg("delay").toInt() * 1000;
     Serial.printf("Servo move duration set to %d seconds\n", moveDuration / 1000);
@@ -287,14 +295,14 @@ void handleSetMoveDuration(){
   }
 }
 
-void saveDuration(){
+void saveDuration() {
   preferences.begin("duration", false);
   String keyDuration = "moveDuration";
   preferences.putInt(keyDuration.c_str(), moveDuration);
   preferences.end();
 }
 
-void loadDuration(){
+void loadDuration() {
   preferences.begin("duration", false);
   String keyDuration = "moveDuration";
   moveDuration = preferences.getInt(keyDuration.c_str(), -1);
@@ -309,9 +317,7 @@ void handleRoot() {
 void checkMidnight() {
   timeClient.update();
   int currentHour = timeClient.getHours();
-  int currentMinute = timeClient.getMinutes();
-
-  if (currentHour == 0 && currentMinute == 0) {  // Es medianoche
+  if (currentHour == 0) {  // Es medianoche
     for (int i = 0; i < MAX_SCHEDULES; i++) {
       schedules[i].activated = false;
     }
@@ -362,13 +368,13 @@ void setup() {
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
 
-  if(psramFound()){
+  if (psramFound()) {
     config.frame_size = FRAMESIZE_HQVGA;
-    config.jpeg_quality = 20;  
+    config.jpeg_quality = 20;
     config.fb_count = 1;
   } else {
     config.frame_size = FRAMESIZE_HQVGA;
-    config.jpeg_quality = 20; 
+    config.jpeg_quality = 20;
     config.fb_count = 1;
   }
 
@@ -381,15 +387,15 @@ void setup() {
     ESP.restart();
   }
 
-  sensor_t * s = esp_camera_sensor_get();
+  sensor_t *s = esp_camera_sensor_get();
   s->set_framesize(s, FRAMESIZE_HQVGA);
 
   Serial.println();
   Serial.println("Set camera ESP32 CAM successfully.");
 
-  myServo.setPeriodHertz(50); 
-  myServo.attach(servoPin, 500, 2400); 
-  myServo.write(servoPos); 
+  myServo.setPeriodHertz(50);
+  myServo.attach(servoPin, 500, 2400);
+  myServo.write(servoPos);
 
   server.on("/", handleRoot);
   server.on("/start", handleStartCamera);
@@ -413,16 +419,16 @@ void setup() {
 
   loadSchedules();
   loadDuration();
-
-  servoTicker.attach(30, checkServoSchedule); 
-  //midnightTicker.attach(60, checkMidnight); // Chequear medianoche cada minuto
+  checkServoSchedule();
+  servoTicker.attach(30, checkServoSchedule);
+  midnightTicker.attach(3600, checkMidnight);  // Chequear medianoche cada hora
 }
 
 void loop() {
   server.handleClient();
 
   if (isCameraActive) {
-    camera_fb_t * fb = esp_camera_fb_get();
+    camera_fb_t *fb = esp_camera_fb_get();
     if (!fb) {
       Serial.println("Camera capture failed: esp_camera_fb_get returned NULL");
     } else {
