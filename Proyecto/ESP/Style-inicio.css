@@ -1,0 +1,92 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: rgba(116, 116, 116, 0.404);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .container {
+    width: 400px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .inner-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    margin: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+    font-size: 36px;
+    font-weight: bold;
+    animation: fadeIn 2s ease;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px;
+  }
+  
+  .button-container div {
+    margin: 20px;
+  }
+  
+  input[type="button"] {
+    width: 150px; 
+    height: 40px; 
+    background-color: #47a386;
+    color: #fff;
+    border: 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    animation: pulse 2s infinite;
+  }
+  
+  input[type="button"]:hover {
+    background-color: #3e8e41;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  input[type="button"]:active {
+    background-color: #3e8e41;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+  }
+  .logo {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 60px; 
+    height: 60px; 
+    object-fit: cover;
+    background-color: transparent; /* propiedad para que se muestre trasparente el fondo(no funciona) */
+    z-index: 1; 
+  }

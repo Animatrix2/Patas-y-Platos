@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+@import url('https://www.fontspace.com/e1234-font-f65141');
+/* Ventana  Emergente*/
+
+* {
+  box-sizing: border-box;
+}
+button {
+  background-color: #e24141;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 25px;
+}
+
+.modal-container {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.3);
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  pointer-events: none;
+  opacity: 0;  
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  transition: opacity 0.3s ease;
+}
+
+.show {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.modal {
+
+    background-color: #fff;
+    width: 600px;
+    max-width: 100%;
+    padding: 30px 50px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+
+
+#tabla{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start:1 ;
+    grid-row-end: 4;
+}
+/* Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#Hora input[type="number"] {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    margin-bottom: 10px;
+    width: 50px;
+    height: 90px;
+    text-align: center;
+    font-size: 32px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+
+    
+}
+.boton, #close {
+    margin-top: 10px;
+    width: 100px;
+}
+label {
+    margin: 10px 0;
+}
+
+/*Todo lo que le sigue*/
+.ConenedorDeTodo{
+display: grid;
+grid-template-columns: 3;
+grid-template-rows: 4;
+border: 2px rgba(128, 127, 127, 0.651);
+padding: 10px;
+background-color: rgba(116, 116, 116, 0.404);
+border-radius: 10px;
+
+}
+#Titulo{
+    grid-column-start:1 ;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    text-align: center;
+}
+.Tabla-Horarios{
+    grid-column-start:1 ;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    font-size: 40px;
+    width: 100%;
+    border: 2px rgba(128, 127, 127, 0.651);
+    border-radius: 10px;
+    margin: auto;
+    background-color: rgba(116, 116, 116, 0.404);
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+.tabla{
+    width: 100%;
+
+}
+
+#tabla-horarios { 
+    width: 100%;
+    border-style: solid; 
+    border-top-width: 3px; 
+    border-right-width: 3px; 
+    border-bottom-width: 3px; 
+    border-left-width: 3px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.boton-accionar{
+    grid-column-start:3 ;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    border: 10%;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    padding: 5%;
+}
+#boton-3{
+    border-radius: 100%;
+    background-color: rgba(61, 1, 85, 0.082) ;
+    border: 0;
+    width: auto;
+    height: auto;
+}
+.Botttton{
+    height:100px;
+    width: 100px;
+}
+.Boton-Abrir{
+    grid-column-start:1 ;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    padding: 3%;
+    margin: auto;
+    text-align: center;
+ }
+ .boton{
+    background-color: #47a386;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+#open{
+    background-color: #fdff9b;
+    color: black;
+}
+.Porciones{
+    grid-column-start:2 ;
+    grid-column-end:3 ;
+    grid-row-start: 3;
+    padding: 3%;
+    margin: auto;
+    text-align: center;
+ }
+
+
+ .modal_container{
+    display: grid;
+    grid-template-columns: 3;
+    grid-template-rows: 2;
+
+ }
+ #delay{
+    width: 25px;
+    height: 50px;
+    font-size: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+ }
+
+
+ #agregar-horas{
+    margin: auto;
+    text-align: center;
+
+ }
+ #porcioness{
+    border: 0;
+    background-color: rgb(102, 187, 243);
+    margin-top: 10px;
+    width: 100px;
+    text-align: center;
+    padding: 10px;
+ }
+
+
