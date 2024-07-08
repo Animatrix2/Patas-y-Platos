@@ -19,7 +19,7 @@ Preferences preferences;
 #define FLASH_LED_PIN 4
 
 String serverName = "192.168.0.248";
-String serverPath = "/ESP32CAM/upload_img.php";
+String serverPath = "/Proyecto/ESP/Camara/upload_img.php";
 const int serverPort = 80;
 
 WiFiClient client;
@@ -32,6 +32,7 @@ int servoPos = 0;
 
 Ticker servoTicker;
 Ticker midnightTicker;
+Ticker pingTicker;
 int moveDuration = 0;
 int setHour = -1;
 int setMinute = -1;
@@ -325,6 +326,18 @@ void checkMidnight() {
   }
 }
 
+void sendPingToServer() {
+  if (client.connect(serverName.c_str(), serverPort)) {
+    client.println("GET /Proyecto/ESP/ping/ping.php HTTP/1.1");
+    client.println("Host: " + serverName);
+    client.println("Connection: close");
+    client.println();
+  } else {
+    Serial.println("Failed to send ping");
+  }
+}
+
+
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 
@@ -422,6 +435,7 @@ void setup() {
   checkServoSchedule();
   servoTicker.attach(30, checkServoSchedule);
   midnightTicker.attach(3600, checkMidnight);  // Chequear medianoche cada hora
+  pingTicker.attach(5, sendPingToServer);
 }
 
 void loop() {
