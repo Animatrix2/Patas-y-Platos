@@ -106,8 +106,7 @@ if ($resultado->num_rows > 0) {
 }
 
 $tablaHTML .= "</table>";
-?>
-
+    ?>
 <a href="../Pagina-inicio.html"><button><-- atras</button></a>
     <div class="ConenedorDeTodo">
         <div id="Titulo"><h1>Horarios</h1></div>
@@ -126,10 +125,10 @@ $tablaHTML .= "</table>";
 
     <div id="modal-delay" class="modal-container">
         <div class="modal-content">
-            <form action="" method="POST">
+
                
                 <button type="button" id="close-delay">Cerrar</button>
-            </form>
+
         </div>
     </div>
 
@@ -137,24 +136,31 @@ $tablaHTML .= "</table>";
         <div class="modal">
             <h1>Agregar Horarios y Modificar Porciones</h1>
             <h2>Horarios    -     Porciones</h2>
-            <form action="" method="POST">
                 <div id="Hora">
                     <table id="agregar-horas">
                         <tr>
                             <td>
-                                <input type="number" id="hora" max="23" min="0" name="horas" >
+                                <form  action="" method="POST">
+                                    
+                                <input type="number" id="hora" max="23" min="0" name="horas" required>
                                 <label for="minuto" style="font-size: 50px;">:</label>
-                                <input type="number" id="minuto" min="0" max="59" name="minutos" >
-                                .
+                                <input type="number" id="minuto" min="0" max="59" name="minutos" required>           
                                 <br>
-                                <button type="submit" class="boton" name="listo">Agregar</button>
-                            </td>
-                            <td>
+                                <button onclick="Programar()" type="submit" class="boton" name="listo">Guardar</button>
+                                </td>
+                                </form>
+                                <form  action="" method="POST">
+                                <td>
+                                <input type="number" id="delay" name="delay" value="<?php echo $porcionValor; ?>" required>
+                                <br>
+                                <button onclick="Duracion()" type="submit" class="boton" name="programar">Guardar</button>
+                                </td>
+                                <br>
+                                </form>
                                 
-                                <input type="number" id="delay" name="delay" value="<?php echo $porcionValor; ?>">
-                                <br>
-                                <button onclick="Programar()" type="submit" name="programar" id="porcioness">Programar</button>
-                            </td>
+                                
+                               
+                        </td>
                         </tr>
                     </table>
                     <br><br>
@@ -163,41 +169,77 @@ $tablaHTML .= "</table>";
                     </div>
                     <button type="button" id="close">Cerrar</button>
                 </div>
-            </form>
+            
         </div>
     </div>
 
     <script src="script.js"></script>
 <script>
     
+    function sendRequest(url) {
+        console.log("Enviando solicitud a:", url);
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                console.log("Respuesta recibida:", data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
-        function Accionar() {
-            const input = document.getElementById("delay");
-            const inputValue = input.value;
-            servoAction(inputValue);
-        }
+    function Accionar() {
+        const input = document.getElementById("delay");
+        const inputValue = input.value;
+        console.log("Accionar llamado con valor:", inputValue);
+        servoAction(inputValue);
+    }
 
-        function Programar() {
-            const hora = document.getElementById("hora");
-            const minuto = document.getElementById("minuto");
-            const delay = document.getElementById("delay");
-            const horaValue = hora.value;
-            const minutoValue = minuto.value;
-            const delayValue = delay.value;
+    function Programar() {
+    const hora = document.getElementById("hora").value;
+    const minuto = document.getElementById("minuto").value;
+    console.log("Programar llamado con valores:", hora, minuto);
+    setServoSchedule(hora, minuto);
+}
 
-            setServoSchedule(horaValue, minutoValue, delayValue);
-        }
+    function Quitar() {
+        const hora = document.getElementById("hora").value;
+        const minuto = document.getElementById("minuto").value;
+        console.log("Quitar llamado con valores:", hora, minuto);
+        removeServoSchedule(hora, minuto);
+    }
 
-        
-        function servoAction(inputValue) {
-            const esp32Url = `http://192.168.0.10/servoAction?delay=${inputValue}`; // Replace with your ESP32-CAM IP address
-            sendRequest(esp32Url);
-        }
+    function Duracion() {
+        const duracion = document.getElementById("delay").value;
+        console.log("Duracion llamado con valor:", duracion);
+        setMoveDuration(duracion);
+    }
 
-        function setServoSchedule(horaValue, minutoValue, delayValue) {
-            const esp32Url = `http://192.168.0.10/setServoSchedule?hora=${horaValue}&minuto=${minutoValue}&duracion=${delayValue}`; // Replace with your ESP32-CAM IP address
-            sendRequest(esp32Url);
-        }
+    function servoAction(inputValue) {
+        const esp32Url = `http://192.168.0.10/servoAction?delay=${inputValue}`; // Replace with your ESP32-CAM IP address
+        console.log("servoAction llamado con URL:", esp32Url);
+        sendRequest(esp32Url);
+    }
+
+    function setServoSchedule(horaValue, minutoValue) {
+        const esp32Url = `http://192.168.0.10/setServoSchedule?hora=${horaValue}&minuto=${minutoValue}`; // Replace with your ESP32-CAM IP address
+        console.log("setServoSchedule llamado con URL:", esp32Url);
+        sendRequest(esp32Url);
+    }
+
+    function removeServoSchedule(horaValue, minutoValue) {
+        const esp32Url = `http://192.168.0.10/removeServoSchedule?hora=${horaValue}&minuto=${minutoValue}`; // Replace with your ESP32-CAM IP address
+        console.log("removeServoSchedule llamado con URL:", esp32Url);
+        sendRequest(esp32Url);
+    }
+
+    function setMoveDuration(duracionValue) {
+        const esp32Url = `http://192.168.0.10/setMoveDuration?delay=${duracionValue}`; // Replace with your ESP32-CAM IP address
+        console.log("setMoveDuration llamado con URL:", esp32Url);
+        sendRequest(esp32Url);
+    }
+
+
     </script>
 </body>
 </html>

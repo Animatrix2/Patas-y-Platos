@@ -8,8 +8,9 @@
 </head>
 <body>
     <h1>Pet-Camera</h1>
+  
     <div class="contenedor-botones">
-       <!-- <button onclick="startCamera()" id="botone-1">Start Camera</button>
+        <!-- <button onclick="startCamera()" id="botone-1">Start Camera</button>
         <button onclick="stopCamera()" id="botone-2">Stop Camera</button> -->
     </div>
     <div class="image-container">
@@ -63,6 +64,10 @@
             } else {
                 stopCamera();
             }
+        });
+
+        window.addEventListener('beforeunload', function() {
+            stopCamera();
         });
     </script>
 </body>
