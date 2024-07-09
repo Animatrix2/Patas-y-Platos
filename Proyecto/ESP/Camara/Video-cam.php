@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="Style-esp.css">
 </head>
 <body>
+<a href="../Pagina-inicio.html"><button><-- atras</button></a>
     <h1>Pet-Camera</h1>
   
     <div class="contenedor-botones">

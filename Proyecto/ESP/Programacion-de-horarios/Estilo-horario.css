@@ -30,6 +30,10 @@ button {
   transition: opacity 0.3s ease;
 }
 
+.modal-container titulo{
+    display:block;
+}
+
 .show {
   pointer-events: auto;
   opacity: 1;

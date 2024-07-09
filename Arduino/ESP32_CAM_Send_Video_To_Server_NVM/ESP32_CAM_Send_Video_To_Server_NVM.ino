@@ -134,8 +134,8 @@ void handleServoRight() {
 }
 
 void handleServoAction() {
-  if (myServo.attached() && server.hasArg("delay")) {
-    int delayTime = server.arg("delay").toInt() * 1000;
+  if (myServo.attached()) {
+    int delayTime = moveDuration;
 
     if (delayTime > 0) {
       servoPos += 90;
@@ -435,7 +435,7 @@ void setup() {
   checkServoSchedule();
   servoTicker.attach(30, checkServoSchedule);
   midnightTicker.attach(3600, checkMidnight);  // Chequear medianoche cada hora
-  pingTicker.attach(5, sendPingToServer);
+  //pingTicker.attach(5, sendPingToServer);
 }
 
 void loop() {
