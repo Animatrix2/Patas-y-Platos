@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comida</title>
-    <link rel="stylesheet" href="estilo-horario.css">
+    <link rel="stylesheet" href="Estilo-horario.css">
 </head>
 <?php
 $mensaje = "";
@@ -93,8 +93,7 @@ $resultado = $conexion->query($sql);
 
 // Variable para almacenar la tabla HTML
 $tablaHTML = "<table border='0' cellspacing='0' cellpadding='0' id='tabla-horarios'>";
-$tablaHTML .= "<tr><th colspan='4'>Horarios</th></tr>";
-$tablaHTML .= "<tr><td>Hora</td><td></td><td>Minuto</td><td>Acción</td></tr>";
+$tablaHTML .= "<tr><td>Hora</td><td></td><td>Minuto</td></tr>";
 
 if ($resultado->num_rows > 0) {
     while ($fila = $resultado->fetch_assoc()) {
@@ -115,6 +114,9 @@ if ($resultado->num_rows > 0) {
 
 $tablaHTML .= "</table>";
 ?>
+<body>
+    
+
 <a href="../Pagina-inicio.html"><button><-- atras</button></a>
 <div class="ConenedorDeTodo">
     <div id="Titulo">
@@ -145,7 +147,7 @@ $tablaHTML .= "</table>";
 
 <div id="modal_container" class="modal-container">
     <div class="modal">
-<!--         <h1>Agregar Horarios y Modificar Porciones</h1> -->
+ <h1> Horarios   Porciones</h1> 
         
         <div id="Hora">
             <table id="agregar-horas">
@@ -158,7 +160,7 @@ $tablaHTML .= "</table>";
                             <label for="minuto" style="font-size: 50px;">:</label>
                             <input  type="number" id="minuto" min="0" max="59" name="minutos" required>
                             <br>
-                            <button onclick="Programar()" type="button" class="boton" name="listo">Cambiar</button>
+                            <button onclick="Programar()" type="button" class="boton" name="listo">Aceptar</button>
                             <button type="submit" class="boton" name="listo" id="porcioness">Confirmar</button>
 
                             </form>
@@ -170,7 +172,7 @@ $tablaHTML .= "</table>";
                            <h2>Porciones</h2>
                             <input type="number" id="delay" name="delay" value="<?php echo $porcionValor; ?>" required>
                             <br>
-                            <button onclick="Duracion()" type="button" class="boton" name="programar">Cambiar</button>
+                            <button onclick="Duracion()" type="button" class="boton" name="programar">Aceptar</button>
                             <button type="submit" class="boton" name="programar" id="porcioness">Confirmar</button>
 
                             </form>
