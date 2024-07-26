@@ -18,7 +18,7 @@ Preferences preferences;
 
 #define FLASH_LED_PIN 4
 
-String serverName = "192.168.0.248";
+String serverName = "192.168.102.206";
 String serverPath = "/Proyecto/ESP/Camara/upload_img.php";
 const int serverPort = 80;
 
@@ -28,7 +28,7 @@ WebServer server(80);
 bool isCameraActive = false;
 Servo myServo;
 int servoPin = 13;
-int servoPos = 0;
+int servoPos = 160;
 
 Ticker servoTicker;
 Ticker midnightTicker;
@@ -112,10 +112,10 @@ void handleStopCamera() {
 void handleServoLeft() {
   if (myServo.attached()) {
     servoPos -= 10;
-    if (servoPos < 0) servoPos = 0;
     myServo.write(servoPos);
     server.send(200, "text/plain", "Servo moved left");
     Serial.println("Servo moved left");
+    Serial.println(servoPos);
   } else {
     Serial.println("Servo not attached!");
   }
@@ -124,10 +124,10 @@ void handleServoLeft() {
 void handleServoRight() {
   if (myServo.attached()) {
     servoPos += 10;
-    if (servoPos > 180) servoPos = 180;
     myServo.write(servoPos);
     server.send(200, "text/plain", "Servo moved right");
     Serial.println("Servo moved right");
+    Serial.println(servoPos);
   } else {
     Serial.println("Servo not attached!");
   }
@@ -138,19 +138,21 @@ void handleServoAction() {
     int delayTime = moveDuration;
 
     if (delayTime > 0) {
-      servoPos += 90;
-      if (servoPos > 180) servoPos = 180;
+      servoPos -= 60;
+      //if (servoPos > 180) servoPos = 180;
       myServo.write(servoPos);
       server.send(200, "text/plain", "Servo moved right with delay");
       Serial.println("Servo moved right");
+      Serial.println(servoPos);
 
       delay(delayTime);
 
-      servoPos -= 90;
-      if (servoPos < 0) servoPos = 0;
+      servoPos += 60;
+      //if (servoPos < 0) servoPos = 0;
       myServo.write(servoPos);
       server.send(200, "text/plain", "Servo moved left after delay");
       Serial.println("Servo moved left");
+      Serial.println(servoPos);
     }
   } else {
     Serial.println("Servo not attached or missing delay parameter!");
@@ -159,17 +161,17 @@ void handleServoAction() {
 
 void moveServoAutomatically() {
   if (myServo.attached() && moveServo) {
-    servoPos += 90;
-    if (servoPos > 180) servoPos = 180;
+    servoPos -= 60;
     myServo.write(servoPos);
     Serial.println("Servo moved automatically");
+    Serial.println(servoPos);
 
     delay(moveDuration);
 
-    servoPos -= 90;
-    if (servoPos < 0) servoPos = 0;
+    servoPos += 60;
     myServo.write(servoPos);
     Serial.println("Servo returned automatically");
+    Serial.println(servoPos);
 
     moveServo = false;
   }
