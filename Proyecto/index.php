@@ -13,7 +13,7 @@
             <br>
             <div class="botones">
              <a href="iniciar.php">
-                 <button >Iniciar seción</button>
+                 <button >Iniciar sesión</button>
                  </a>
             </div>
 

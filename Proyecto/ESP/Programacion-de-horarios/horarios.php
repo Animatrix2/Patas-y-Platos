@@ -18,7 +18,7 @@ if ($conexion->connect_error) {
 }
 
 // Manejar la solicitud de eliminación
-if (isset($_REQUEST["eliminar"])) {
+if (isset($_REQUEST["eliminar_php"]) && $_REQUEST["eliminar_php"] == "eliminar") {
     $idHorarios = $_REQUEST["idHorarios"];
     $deleteSql = "DELETE FROM horarios WHERE IdHorarios = $idHorarios";
     $resultadoEliminar = $conexion->query($deleteSql);
@@ -30,7 +30,7 @@ if (isset($_REQUEST["eliminar"])) {
 }
 
 // Manejar la solicitud de agregar
-if (isset($_REQUEST["listo"])) {
+if (isset($_REQUEST["programar_php"]) && $_REQUEST["programar_php"] == "programar") {
     $Hora = isset($_REQUEST["horas"]) ? $_REQUEST["horas"] : null;
     $Minuto = isset($_REQUEST["minutos"]) ? $_REQUEST["minutos"] : null;
 
@@ -65,9 +65,9 @@ if ($porcionResultado && $porcionResultado->num_rows > 0) {
     $porcionValor = "No se encontró el valor";
 }
 
-if (isset($_REQUEST["programar"])) {
+if (isset($_REQUEST["duracion_php"]) && $_REQUEST["duracion_php"] == "duracion") {
     $porcionValor = $_REQUEST["delay"];
-    $checksql = "UPDATE `Porciones` SET 
+    $checksql = "UPDATE `porciones` SET 
     IdPorcion= '$idPorcion',
     porcion= '$porcionValor'
     WHERE `IdPorcion` = $idPorcion;";
@@ -100,13 +100,13 @@ if ($resultado->num_rows > 0) {
         $tablaHTML .= "<tr><td>" . $fila["Hora"] . "</td><td>:</td><td>" . $fila["Minuto"] . "</td>";
         $tablaHTML .= "<td>
                         
-                        <input type='submit' name='eliminar' value='Eliminar' onclick=\"Quitar('" . $fila["Hora"] . "', '" . $fila["Minuto"] . "')\">
-                        
-                        <form action='' method='POST' style='display:inline-block;'>
-                        <input type='hidden' name='idHorarios' value='" . $fila["IdHorarios"] . "'>
-                        <input type='submit' name='eliminar' value='Confirmar'>
-                        </form>
-                        </td></tr>";
+        <button onclick=\"Eliminar('" . $fila["Hora"] . "', '" . $fila["Minuto"] . "', '" . $fila["IdHorarios"] . "')\">Eliminar</button>
+        
+        <form name='eliminarForm_" . $fila["IdHorarios"] . "' action='' method='POST' style='display:none;'>
+        <input type='hidden' name='idHorarios' value='" . $fila["IdHorarios"] . "'>
+        <input type='hidden' name='eliminar_php' value='eliminar'>
+        </form>
+        </td></tr>";
     }
 } else {
     $tablaHTML .= "<tr><td colspan='4'>No se encontraron horarios en la base de datos.</td></tr>";
@@ -128,11 +128,11 @@ $tablaHTML .= "</table>";
         </div>
     </div>
     <div class="boton-accionar">
-        <button onclick="Accionar()" id="boton-3"><img src="https://cdn-icons-png.flaticon.com/512/1004/1004166.png"
+        <button onclick="servoAction()" id="boton-3"><img src="https://cdn-icons-png.flaticon.com/512/1004/1004166.png"
                 alt="" class="Botttton" align=center></button>
     </div>
     <div class="Boton-Abrir">
-        <button id="open">Agregar-Modificar Porciones</button>
+        <button id="open">Configurar PetPenser</button>
     </div>
 </div>
 
@@ -147,33 +147,34 @@ $tablaHTML .= "</table>";
 
 <div id="modal_container" class="modal-container">
     <div class="modal">
- <h1> Horarios   Porciones</h1> 
+ <h1>Configurar PetPenser</h1> 
         
         <div id="Hora">
             <table id="agregar-horas">
                 <tr>                                
                     <td>
-                            <form id="horarioForm" action="" method="POST">
+                            <form name="horarioForm" action="" method="POST">
 
                            <h2>Horarios</h2>
                             <input type="number" id="hora" max="23" min="0" name="horas" required>
                             <label for="minuto" style="font-size: 50px;">:</label>
                             <input  type="number" id="minuto" min="0" max="59" name="minutos" required>
                             <br>
-                            <button onclick="Programar()" type="button" class="boton" name="listo">Aceptar</button>
-                            <button type="submit" class="boton" name="listo" id="porcioness">Confirmar</button>
+                            <button onclick="Programar()" type="button" class="boton" name="programar">Confirmar</button>
+                            <input type="hidden" class="boton" name="programar_php">
+
 
                             </form>
                     </td>
                     <td>
                   
-                            <form id="porcionForm" action="" method="POST">
+                            <form name="duracionForm" action="" method="POST">
 
-                           <h2>Porciones</h2>
+                           <h2>Duración</h2>
                             <input type="number" id="delay" name="delay" value="<?php echo $porcionValor; ?>" required>
                             <br>
-                            <button onclick="Duracion()" type="button" class="boton" name="programar">Aceptar</button>
-                            <button type="submit" class="boton" name="programar" id="porcioness">Confirmar</button>
+                            <button onclick="Duracion()" type="button" class="boton" name="duracion">Confirmar</button>
+                            <input type="hidden" class="boton" name="duracion_php">
 
                             </form>
                         </td>
@@ -211,9 +212,6 @@ $tablaHTML .= "</table>";
             });
     }
 
-    function Accionar() {
-        servoAction();
-    }
 
     function Programar() {
         const hora = document.getElementById("hora").value;
@@ -224,20 +222,29 @@ $tablaHTML .= "</table>";
     }
         console.log("Programar llamado con valores:", hora, minuto);
         setServoSchedule(hora, minuto);
-    }
 
-    function Quitar(hora, minuto) {
-        console.log("Quitar llamado con valores:", hora, minuto);
-        removeServoSchedule(hora, minuto);
+        document.horarioForm.programar_php.value="programar";
+        document.horarioForm.submit()
     }
 
     function Duracion() {
         const duracion = document.getElementById("delay").value;
         console.log("Duracion llamado con valor:", duracion);
         setMoveDuration(duracion);
+
+        document.duracionForm.duracion_php.value="duracion";
+        document.duracionForm.submit()
     }
 
-    function servoAction(inputValue) {
+    function Eliminar(hora, minuto, idHorarios) {
+        console.log("Eliminar llamado con valores:", hora, minuto);
+        removeServoSchedule(hora, minuto);
+
+        document.forms["eliminarForm_" + idHorarios].submit();
+    }
+
+    
+    function servoAction() {
         const esp32Url = `http://192.168.0.10/servoAction`; // Replace with your ESP32-CAM IP address
         console.log("servoAction llamado con URL:", esp32Url);
         sendRequest(esp32Url);
