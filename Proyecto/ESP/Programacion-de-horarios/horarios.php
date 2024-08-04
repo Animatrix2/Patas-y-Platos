@@ -117,8 +117,8 @@ if ($resultado->num_rows > 0) {
 $tablaHTML .= "</table>";
 
 ?>
-<body>
-<a href="../Pagina-inicio.html"><button><-- atras</button></a>
+<body >
+<a href="../Pagina-inicio.html"><button id="atras"></button></a>
 <div class="ConenedorDeTodo">
     <div id="Titulo">
         <h1>Horarios</h1>

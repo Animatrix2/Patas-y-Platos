@@ -7,7 +7,7 @@
   
   body {
     font-family: 'Poppins', sans-serif;
-    background-color: rgba(116, 116, 116, 0.404);
+    background-image: url('img/fondo3.jpg');
     height: 100vh;
     margin: 0;
     display: flex;
@@ -18,7 +18,7 @@
   
   .container {
     width: 400px;
-    background-color: #fff;
+    background-color: #faf6dd;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -28,7 +28,7 @@
   }
   
   .inner-container {
-    background-color: #fff;
+    background-color: #f3eb9f;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
@@ -56,27 +56,27 @@
   }
   
   input[type="button"] {
-    width: 150px; 
-    height: 40px; 
-    background-color: #47a386;
+    border: none;
+    outline: none;
+    background-color: #6c5ce7;
+    padding: 15px 50px;
+    font-size: 12px;
+    font-weight: 700;
     color: #fff;
-    border: 0;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
-    animation: pulse 2s infinite;
+    border-radius: 5px;
+    transition: all ease 0.1s;
+    box-shadow: 0px 5px 0px 0px #a29bfe;
   }
   
   input[type="button"]:hover {
-    background-color: #3e8e41;
+    background-color: #3a22eb;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 5px 0px 0px #a29bfe;
   }
   
   input[type="button"]:active {
-    background-color: #3e8e41;
+    background-color: #6c5ce7;
+    transform: translateY(5px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
   }
@@ -90,3 +90,4 @@
     background-color: transparent; /* propiedad para que se muestre trasparente el fondo(no funciona) */
     z-index: 1; 
   }
+  

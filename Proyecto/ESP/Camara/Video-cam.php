@@ -6,8 +6,9 @@
     <title>Pet-Camera</title>
     <link rel="stylesheet" href="Style-esp.css">
 </head>
-<body>
-<a href="../Pagina-inicio.html"><button><-- atras</button></a>
+<body style="background-image: url('img/fondo3.jpg');">
+
+<a href="../Pagina-inicio.html"><button></button></a>
     <h1>Pet-Camera</h1>
   
     <div class="contenedor-botones">

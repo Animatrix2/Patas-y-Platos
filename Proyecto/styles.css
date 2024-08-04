@@ -1,42 +1,50 @@
 /* Estilos globales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-image: url('img/fondo3.jpg');
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-}
-
-.login-container {
+    transition: background-color 0.4s; /* Agregamos una transición para el fondo */
+  }
+  
+  .login-container {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
-}
-
-h2 {
+    animation: fadeIn 2s ease-in-out; /* Agregamos una animación para el contenedor de login */
+  }
+  
+  h2 {
     margin-bottom: 20px;
-}
-
-label {
+    animation: slideInFromLeft 1.5s ease-in-out; /* Agregamos una animación para el título */
+  }
+  
+  label {
     display: block;
     margin: 10px 0 5px;
     text-align: left;
-}
-
-input {
+  }
+  
+  input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-button {
+    transition: border-color 0.4s; /* Agregamos una transición para el borde del input */
+  }
+  
+  input:focus {
+    border-color: #007BFF; /* Cambiamos el color del borde cuando se enfoca el input */
+  }
+  
+  button {
     width: 100%;
     padding: 10px;
     background-color: #007BFF;
@@ -45,14 +53,15 @@ button {
     color: white;
     font-size: 16px;
     cursor: pointer;
-}
-
-button:hover {
+    transition: background-color 0.4s; /* Agregamos una transición para el botón */
+  }
+  
+  button:hover {
     background-color: #0056b3;
-}
-
-/* Nuevos estilos para la página de bienvenida */
-.hero-container {
+  }
+  
+  /* Nuevos estilos para la página de bienvenida */
+  .hero-container {
     text-align: center;
     padding: 20px;
     border-radius: 10px;
@@ -61,23 +70,23 @@ button:hover {
     animation: fadeIn 2s ease-in-out;
     max-width: 600px;
     margin: 20px;
-}
-
-.hero-content h1 {
+  }
+  
+  .hero-content h1 {
     font-size: 4em;
     margin-bottom: 20px;
     animation: slideInFromLeft 1.5s ease-in-out;
-    color: #fff;
-}
-
-.hero-content p {
+    color: #6264ca;
+  }
+  
+  .hero-content p {
     font-size: 1.5em;
     margin-bottom: 30px;
     animation: slideInFromRight 1.5s ease-in-out;
     color: #fff;
-}
-
-.cta-button {
+  }
+  
+  .cta-button {
     display: inline-block;
     padding: 15px 30px;
     font-size: 1.2em;
@@ -88,51 +97,53 @@ button:hover {
     text-decoration: none;
     transition: background-color 0.3s ease;
     animation: fadeInUp 2s ease-in-out;
-}
-
-.cta-button:hover {
+  }
+  
+  .cta-button:hover {
     background-color: #c70039;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-@keyframes slideInFromLeft {
+  }
+  
+  @keyframes slideInFromLeft {
     from { transform: translateX(-100%); }
     to { transform: translateX(0); }
-}
-
-@keyframes slideInFromRight {
+  }
+  
+  @keyframes slideInFromRight {
     from { transform: translateX(100%); }
     to { transform: translateX(0); }
-}
-
-@keyframes fadeInUp {
+  }
+  
+  @keyframes fadeInUp {
     from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
     .hero-content h1 {
-        font-size: 2.5em;
+      font-size: 2.5em;
     }
-
+  
     .hero-content p {
-        font-size: 1.2em;
+      font-size: 1.2em;
     }
-
+  
     .cta-button {
-        font-size: 1em;
-        padding: 10px 20px;
+      font-size: 1em;
+      padding: 10px 20px;
     }
-}
-.back-link {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            font-size: 0.9em;
-        }
+  }
+  
+  .back-link {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.9em;
+    animation: fadeIn 2s ease-in-out; 
+  }

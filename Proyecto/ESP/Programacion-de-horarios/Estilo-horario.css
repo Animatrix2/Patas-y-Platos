@@ -6,15 +6,67 @@
   box-sizing: border-box;
 }
 button {
-  background-color: #e24141;
+  border: none;
+    outline: none;
+    background-color: #6c5ce7;
+    padding: 20px 35px; /* Ajustamos el tamaño del botón */
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 5px;
+    transition: all ease 0.1s;
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+    position: relative;
+    margin: 20px; /* Mantenemos el margen para que no esté pegado al borde de la pantalla */
   border: 0;
-  border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  font-size: 14px;
   padding: 10px 25px;
 }
-
+#atras {
+  border: none;
+    outline: none;
+    background-color: #6c5ce7;
+    padding: 20px 35px; /* Ajustamos el tamaño del botón */
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 5px;
+    transition: all ease 0.1s;
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+    position: relative;
+    margin: 20px; /* Mantenemos el margen para que no esté pegado al borde de la pantalla */
+  border: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px 35px;
+}
+#atras::after {
+  /* Estilos de la flecha */
+  content: "\2190"; /* Código Unicode de la flecha hacia la izquierda */
+  font-size: 24px; /* Ajustamos el tamaño de la flecha */
+  position: absolute;
+  top: 50%;
+  left: 50%; /* Centramos la flecha horizontalmente */
+  transform: translate(-50%, -50%); /* Centramos la flecha verticalmente */
+  transition: all ease 0.2s;
+}
+button:hover {
+  /* Estilos del botón al pasar el mouse */
+  background-color: #3a22eb;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 5px 0px 0px #a29bfe;
+}
+#atras:hover::after {
+  /* Animación de la flecha al pasar el mouse */
+  transform: translate(-50%, -50%) scale(1.5); /* Ajustamos la escala de la flecha */
+  right: 15px; /* Ajustamos la posición de la flecha */
+}
+button:active {
+  /* Estilos del botón al hacer clic */
+  background-color: #6c5ce7;
+  transform: translateY(5px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(2px);
+}
 .modal-container {
   display: flex;
   background-color: rgba(0, 0, 0, 0.3);
@@ -92,7 +144,7 @@ label {
 display: grid;
 grid-template-columns: 3;
 grid-template-rows: 4;
-border: 2px rgba(128, 127, 127, 0.651);
+border: 2px rgba(167, 89, 89, 0.651);
 padding: 10px;
 background-color: rgba(116, 116, 116, 0.404);
 border-radius: 10px;
@@ -110,10 +162,10 @@ border-radius: 10px;
     grid-row-start: 2;
     font-size: 40px;
     width: 100%;
-    border: 2px rgba(128, 127, 127, 0.651);
+    border: 2px rgba(230, 238, 161, 0.938);
     border-radius: 10px;
     margin: auto;
-    background-color: rgba(116, 116, 116, 0.404);
+    background-color: rgba(241, 241, 167, 0.938);
     padding: 10px;
     font-weight: bold;
     text-align: center;
