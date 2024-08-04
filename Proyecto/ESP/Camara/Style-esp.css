@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
-    background-image: url("img/fondo3.jpg");
+    background-image: url("../img/fondo3.jpg");
     font-family: 'Roboto', sans-serif; /* Modern, clean font */
     color: black;
     margin: 0;

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet-Camera</title>
-    <link rel="stylesheet" href="Style-esp.css">
+    <link rel="stylesheet" href="style-esp.css">
 </head>
-<body style="background-image: url('img/fondo3.jpg');">
+<body>
 
 <a href="../Pagina-inicio.html"><button></button></a>
     <h1>Pet-Camera</h1>

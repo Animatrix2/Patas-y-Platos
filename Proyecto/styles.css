@@ -1,7 +1,7 @@
 /* Estilos globales */
 body {
     font-family: Arial, sans-serif;
-    background-image: url('img/fondo3.jpg');
+    background-image: url('ESP/img/fondo3.jpg');
     display: flex;
     justify-content: center;
     align-items: center;
