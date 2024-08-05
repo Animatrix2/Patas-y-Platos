@@ -202,8 +202,10 @@ $tablaHTML .= "</table>";
             console.log("Programar llamado con valores:", hora, minuto);
         setServoSchedule(hora, minuto);
 
+        setTimeout(function() {
         document.horarioForm.programar_php.value = "programar";
         document.horarioForm.submit();
+        }, 1000);
 
         }
        
@@ -218,9 +220,12 @@ $tablaHTML .= "</table>";
     }
     else{
         setMoveDuration(duracion);
+        setTimeout(function() {
+            //your code to be executed after 1 second
+            document.duracionForm.duracion_php.value="duracion";
+            document.duracionForm.submit() 
+}, 1000);
 
-        document.duracionForm.duracion_php.value="duracion";
-        document.duracionForm.submit() 
     } 
     }
 
@@ -231,7 +236,9 @@ $tablaHTML .= "</table>";
         console.log("Eliminar llamado con valores:", hora, minuto);
         removeServoSchedule(hora, minuto);
 
+        setTimeout(function() {
         document.forms["eliminarForm_" + idHorarios].submit();
+        }, 1000);
     }
 
     function servoAction() {

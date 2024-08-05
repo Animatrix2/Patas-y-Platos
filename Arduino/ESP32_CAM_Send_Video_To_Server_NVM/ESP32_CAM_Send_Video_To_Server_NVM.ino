@@ -27,8 +27,12 @@ WebServer server(80);
 
 bool isCameraActive = false;
 Servo myServo;
-int servoPin = 13;
+int servoPin = 12;
 int servoPos = 160;
+
+#define LED_RED_PIN 13
+#define LED_GREEN_PIN 15
+#define LED_BLUE_PIN 14
 
 Ticker servoTicker;
 Ticker midnightTicker;
@@ -52,6 +56,14 @@ struct Schedule {
 // Arreglo para almacenar múltiples horarios programados
 const int MAX_SCHEDULES = 5;  // Ajustar según la cantidad deseada
 Schedule schedules[MAX_SCHEDULES];
+
+//Función para controlar los leds RGB
+void setRGBColor(int red, int green, int blue) {
+  analogWrite(LED_RED_PIN, red);
+  analogWrite(LED_GREEN_PIN, green);
+  analogWrite(LED_BLUE_PIN, blue);
+}
+
 
 
 void sendFrameToServer(camera_fb_t *fb) {
@@ -101,13 +113,16 @@ void handleStartCamera() {
   isCameraActive = true;
   server.send(200, "text/plain", "Camera started");
   Serial.println("Camera started");
+  setRGBColor(255, 0, 0);  // LED rojo
 }
 
 void handleStopCamera() {
   isCameraActive = false;
   server.send(200, "text/plain", "Camera stopped");
   Serial.println("Camera stopped");
+  setRGBColor(0, 255, 0);  // LED verde
 }
+
 
 void handleServoLeft() {
   if (myServo.attached()) {
@@ -346,6 +361,14 @@ void setup() {
   Serial.begin(115200);
   Serial.println();
 
+  //Configuración inicial del LED RGB
+  pinMode(LED_RED_PIN, OUTPUT);
+  pinMode(LED_GREEN_PIN, OUTPUT);
+  pinMode(LED_BLUE_PIN, OUTPUT);
+
+  setRGBColor(0, 0, 255);  // LED azul durante la configuración
+
+
   pinMode(FLASH_LED_PIN, OUTPUT);
 
   WiFiManager wifiManager;
@@ -425,6 +448,8 @@ void setup() {
   server.begin();
   Serial.println("HTTP server started");
 
+ 
+
   // Initialize schedules
   for (int i = 0; i < MAX_SCHEDULES; i++) {
     schedules[i].hour = -1;
@@ -438,6 +463,9 @@ void setup() {
   servoTicker.attach(30, checkServoSchedule);
   midnightTicker.attach(3600, checkMidnight);  // Chequear medianoche cada hora
   //pingTicker.attach(5, sendPingToServer);
+  // Encender LED verde después de la configuración
+  setRGBColor(0, 255, 0);
+
 }
 
 void loop() {
