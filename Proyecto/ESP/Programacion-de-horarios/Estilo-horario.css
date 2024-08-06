@@ -2,10 +2,36 @@
 @import url('https://www.fontspace.com/e1234-font-f65141');
 /* Ventana  Emergente*/
 
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 10px;
+  padding: 0;
+  background-image:url(../img/Fondo-patas2.jpg) ;
+
+
+}	
 * {
   box-sizing: border-box;
 }
 button {
+  border: none;
+    outline: none;
+    background-color: #e75c5c;
+    padding: 20px 35px; /* Ajustamos el tamaño del botón */
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 5px;
+    transition: all ease 0.1s;
+    box-shadow: 0px 5px 0px 0px #fe9b9b;
+    position: relative;
+    margin: 20px; /* Mantenemos el margen para que no esté pegado al borde de la pantalla */
+  border: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 10px 25px;
+  text-align: center;
+}
+.button-Extra {
   border: none;
     outline: none;
     background-color: #6c5ce7;
@@ -22,6 +48,7 @@ button {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 10px 25px;
 }
+
 #atras {
   border: none;
     outline: none;
@@ -51,6 +78,12 @@ button {
 }
 button:hover {
   /* Estilos del botón al pasar el mouse */
+  background-color: #eb2222;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 5px 0px 0px #fe9b9b;
+}
+.button-Extra:hover {
+  /* Estilos del botón al pasar el mouse */
   background-color: #3a22eb;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 5px 0px 0px #a29bfe;
@@ -69,7 +102,7 @@ button:active {
 }
 .modal-container {
   display: flex;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.527);
   align-items: center;
   justify-content: center;
   position: fixed;
@@ -93,16 +126,20 @@ button:active {
 
 .modal {
 
-    background-color: #fff;
+    background-color: #fdc781;
     width: 600px;
     max-width: 100%;
     padding: 30px 50px;
-    border-radius: 5px;
+    border-radius: 50px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
-
+input[type="number"]{
+  background-color: #f8d5a7;
+  border-radius: 20px;
+  border: none;
+}
 
 #tabla{
     grid-column-start: 2;
@@ -134,6 +171,9 @@ input::-webkit-inner-spin-button {
     margin-top: 10px;
     width: 100px;
 }
+
+
+
 label {
     margin: 10px 0;
 }
@@ -146,7 +186,7 @@ grid-template-columns: 3;
 grid-template-rows: 4;
 border: 2px rgba(167, 89, 89, 0.651);
 padding: 10px;
-background-color: rgba(116, 116, 116, 0.404);
+background-color: rgba(116, 116, 116, 0.781);
 border-radius: 10px;
 
 }
@@ -197,11 +237,18 @@ border-radius: 10px;
 }
 #boton-3{
     border-radius: 100%;
-    background-color: rgba(61, 1, 85, 0.082) ;
+    background-color: hsl(247, 74%, 63%) ;
     border: 0;
     width: auto;
     height: auto;
 }
+#boton-3:hover {
+  /* Estilos del botón al pasar el mouse */
+  background-color: #6c5ce7;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 5px 0px 0px #a29bfe;
+}
+
 .Botttton{
     height:100px;
     width: 100px;
@@ -220,6 +267,15 @@ border-radius: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+.boton:hover {
+  /* Estilos del botón al pasar el mouse */
+  background-color: #108b64;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 5px 0px 0px rgb(128, 177, 128);
+}
+
+
+
 #open{
     background-color: #fdff9b;
     color: black;
@@ -238,6 +294,7 @@ border-radius: 10px;
     display: grid;
     grid-template-columns: 3;
     grid-template-rows: 2;
+
 
  }
  #delay{
@@ -280,9 +337,9 @@ border-radius: 10px;
       font-size: 30px;
       font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
       width: 100%;
-      border: 2px rgba(128, 127, 127, 0.651);
+      border: 2px rgba(230, 238, 161, 0.938);
       border-radius: 10px;
-      background-color: rgba(116, 116, 116, 0.404);
+      background-color: rgba(241, 241, 167, 0.938);
       font-weight: bold;
       text-align: center;
     }
@@ -310,7 +367,7 @@ border-radius: 10px;
   
     #boton-3 {
       border-radius: 100%;
-      background-color: rgba(61, 1, 85, 0.082);
+      background-color: hsl(247, 74%, 63%) ;
       border: 0;
       width: auto;
       height: auto;

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comida</title>
-    <link rel="stylesheet" href="estilo-horario.css">
+    <link rel="stylesheet" href="Estilo-horario.css">
 </head>
 <?php
 $mensaje = "";
@@ -129,10 +129,10 @@ $tablaHTML .= "</table>";
         </div>
     </div>
     <div class="boton-accionar">
-        <button onclick="servoAction()" id="boton-3"><img src="../img/activar-desactivar.png" alt="" class="Botttton" align=center></button>
+        <button onclick="servoAction()" id="boton-3" class="button-Extra"><img src="../img/activar-desactivar.png" alt="" class="Botttton " align=center></button>
     </div>
     <div class="Boton-Abrir">
-        <button id="open">Configurar PetPenser</button>
+        <button id="open" class="button-Extra">Configurar PetPenser</button>
     </div>
 </div>
 
