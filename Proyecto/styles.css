@@ -1,7 +1,8 @@
 /* Estilos globales */
 body {
     font-family: Arial, sans-serif;
-    background-image: url('ESP/img/fondo3.jpg');
+    background-image: url('ESP/img/Fondo-de-pantalla-Escritorio.png');
+    background-size: 100% 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -146,4 +147,12 @@ body {
     left: 10px;
     font-size: 0.9em;
     animation: fadeIn 2s ease-in-out; 
+  }
+
+  @media (max-width: 700px) {  
+    body{
+      background-image: url('ESP/img/Fondo-de-Pantalla-Celular.png');
+      background-size: 100% 100% !important;
+    }
+
   }

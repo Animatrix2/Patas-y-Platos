@@ -6,7 +6,9 @@ body {
   font-family: 'Poppins', sans-serif;
   margin: 10px;
   padding: 0;
-  background-image:url(../img/Fondo-patas2.jpg) ;
+  background-image: url('../img/Fondo-de-pantalla-Escritorio.png');
+  background-size: 100% 100%;
+  height: 100vh;
 
 
 }	
@@ -320,6 +322,10 @@ border-radius: 10px;
  }
 
  @media (max-width: 700px) {
+  body{
+    background-image: url('../img/Fondo-de-Pantalla-Celular.png');
+    background-size: 100% 100%;
+  }
     .ConenedorDeTodo {
       grid-template-columns: 1fr;
       grid-template-rows: auto;
