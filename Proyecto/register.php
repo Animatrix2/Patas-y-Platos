@@ -14,21 +14,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     if (mysqli_num_rows($result_check) > 0) {
         echo "La cuenta ya existe";
     } else {
+        // Cifrar la contraseña
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insertar el nuevo usuario en la base de datos
-        $sql_add = "INSERT INTO `users` (`username`, `password`) VALUES ('$username', '$password')";
+        // Insertar el nuevo usuario en la base de datos con la contraseña cifrada
+        $sql_add = "INSERT INTO `users` (`username`, `password`) VALUES ('$username', '$hashed_password')";
         $query = mysqli_query($conn, $sql_add);
 
         if ($query) {
             header('Location: bienvenido.php');
         } else {
-            // Credenciales inválidas, mostrar mensaje de error
-        $mensaje="Nombre de usuario ya usado";
-
-        //---GET--
-        header('Location: crear.php?data='.$mensaje);
-
-           // echo "Error al insertar datos: " . mysqli_error($conn);
+            $mensaje="Nombre de usuario ya usado";
+            header('Location: crear.php?data='.$mensaje);
         }
     }
 
@@ -36,3 +33,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     mysqli_close($conn);
 }
 ?>
+
