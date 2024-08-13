@@ -15,8 +15,8 @@
             
             <label for="password">Contraseña</label>
             <input type="password" id="password" name="password" required>
-            
-            <button type="submit" name="submit">Registrar</button><br><br>
+    
+            <button type="submit" name="submit" class="accion">Registrar</button>
             <?php 
             //---GET---//
             //Revisa si se recibió una consulta GET y si existe una variable "data" en ella
@@ -31,7 +31,10 @@
             }
             ?>
         </form>
-         <a href="index.php" class="back-link">Volver atrás</a>
+        <a href="index.php"><button class="volver">Ir atras</button></a>
+         
+         
     </div>
+    
 </body>
 </html>

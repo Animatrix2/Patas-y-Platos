@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet-Camera</title>
-    <link rel="stylesheet" href="style-esp.css">
+    <link rel="stylesheet" href="Style-esp.css">
 </head>
 <body>
 
@@ -58,6 +58,7 @@
             const esp32Url = 'http://192.168.0.10/stop'; // Replace with your ESP32-CAM IP address
             sendRequest(esp32Url);
             document.getElementById('video-frame').classList.add('background-standby');
+            document.getElementById('video-frame').src = 'https://steamuserimages-a.akamaihd.net/ugc/798670388549562199/3982D0F4C43E2704482AA4727ED03D8CAC5360DB/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'; // Imagen transparente (1x1 píxel)
         }
 
         document.getElementById('camera-toggle').addEventListener('change', function() {

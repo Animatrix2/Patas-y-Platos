@@ -8,19 +8,19 @@
 </head>
 <body>
 
-    <div class="">
+    <div class="login-container">
         <h2>PET-PENSER</h2>
             <br>
             <div class="botones">
-             <a href="iniciar.php">
-                 <button >Iniciar sesión</button>
+            <a href="iniciar.php">
+                 <button class="accion">Iniciar sesión</button>
                  </a>
             </div>
 
             <br>
             <div class="botones">
              <a href="crear.php">
-                 <button >¿No te has registrado?</button>
+                 <button class="volver">¿No te has registrado?</button>
                  </a>
             </div>
     </div>

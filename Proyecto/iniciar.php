@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <body>
+
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
         <form action="login.php" method="POST">
@@ -29,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <label for="password">Contraseña</label>
             <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Iniciar Sesión</button><br><br>
+            </a> <button type="submit" class="accion">Iniciar Sesión</button><p> 
+           
              
             <?php 
             //---GET---//
@@ -48,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             </form>
         </form>
-         <a href="index.php" class="back-link">Volver atrás</a>
+        </p><a href="index.php"><button class="volver">Ir atras</button>
     </div>
   
 </body>
