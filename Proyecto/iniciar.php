@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <body>
-
+<div class="inner-container">
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
         <form action="login.php" method="POST">
@@ -51,6 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         </p><a href="index.php"><button class="volver">Ir atras</button>
     </div>
-  
+    </div>
 </body>
 </html>

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<a href="../Pagina-inicio.html"><button></button></a>
+<a href="../Pagina-inicio.php"><button id="atras"></button></a>
     <h1>Pet-Camera</h1>
   
     <div class="contenedor-botones">

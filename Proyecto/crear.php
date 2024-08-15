@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="Styles.css">
 </head>
 <body>
+<div class="inner-container">
     <div class="login-container">
         <h2>Crea tu cuenta</h2>
         <form action="register.php" method="POST">
@@ -35,6 +36,6 @@
          
          
     </div>
-    
+    </div>
 </body>
 </html>

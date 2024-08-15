@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="Styles.css">
 </head>
 <body>
+<div class="inner-container">
+
 
     <div class="login-container">
         <h2>PET-PENSER</h2>
@@ -23,6 +25,7 @@
                  <button class="volver">¿No te has registrado?</button>
                  </a>
             </div>
+    </div>
     </div>
 </body>
 </html>

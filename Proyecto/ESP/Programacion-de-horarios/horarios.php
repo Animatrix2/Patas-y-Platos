@@ -118,7 +118,7 @@ $tablaHTML .= "</table>";
 
 ?>
 <body >
-<a href="../Pagina-inicio.html"><button id="atras"></button></a>
+<a href="../Pagina-inicio.php"><button id="atras"></button></a>
 <div class="ConenedorDeTodo">
     <div id="Titulo">
         <h1>Horarios</h1>
@@ -155,7 +155,7 @@ $tablaHTML .= "</table>";
                             <label for="minuto" style="font-size: 50px;">:</label>
                             <input type="number" id="minuto" min="0" max="59" name="minutos" required>
                             <br>
-                            <button onclick="Programar()" type="button" class="boton" name="programar">Confirmar</button>
+                            <button onclick="Programar()" type="button" class="boton" name="programar"></button>
                             <input type="hidden" class="boton" name="programar_php">
                         </form>
                     </td>
@@ -164,7 +164,7 @@ $tablaHTML .= "</table>";
                             <h2>Duración</h2>
                             <input type="number" id="delay" name="delay" min="1" value="<?php echo $porcionValor; ?>" required>
                             <br>
-                            <button onclick="Duracion()" type="button" class="boton" name="duracion">Confirmar</button>
+                            <button onclick="Duracion()" type="button" class="boton" name="duracion"></button>
                             <input type="hidden" class="boton" name="duracion_php">
                         </form>
                     </td>
