@@ -122,7 +122,7 @@ button{
     text-align: center;
     padding: 20px;
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.5);
+    background: #6c5ce7;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     animation: fadeIn 2s ease-in-out;
     max-width: 600px;
@@ -133,7 +133,7 @@ button{
     font-size: 4em;
     margin-bottom: 20px;
     animation: slideInFromLeft 1.5s ease-in-out;
-    color: #6264ca;
+    color: #4a3469;
   }
   
   .hero-content p {
@@ -211,4 +211,23 @@ button{
       background-size: 100% 100% !important;
     }
 
+  }
+
+  .mensajes-cuidados {
+    margin-top: 20px;
+}
+
+.mensajes-cuidados h2 {
+    font-size: 1.2em;
+    color: #333;
+}
+
+.mensajes-cuidados ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.mensajes-cuidados li {
+    margin-bottom: 5px;
+    color: #555;
   }

@@ -15,10 +15,6 @@
     header('Location:../index.php');
     exit;
   }
-  //Mostrar nombre de usuario en la barra de navegacion
-  echo '<h2>Bienvenido, '. $_SESSION['usu']. '!</h2>';
-  
-
 //cerrar sesion del usuario y redirigir a ../index.php
   if (isset($_GET['cerrar'])) {
     session_destroy();
