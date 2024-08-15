@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="Estilo-horario.css">
 </head>
 <?php
+session_start();
+  
+if (!isset($_SESSION['usu'])) {
+  header('Location:../index.php');
+  exit;
+}
 $mensaje = "";
 
 // Conexión a la base de datos
