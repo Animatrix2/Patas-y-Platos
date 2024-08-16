@@ -28,7 +28,8 @@
   
   <div class="container">
     <div class="inner-container">
-      <h1>Bienvenido a su Pet-Penser</h1>
+    <h1>Bienvenido a su Pet-Penser, <?php echo $_SESSION['usu']; ?></h1>
+
       <div class="button-container">
         <div>
           <a href="Camara/Video-cam.php"><input type="button" value="Camara"style= ></a>
@@ -38,7 +39,7 @@
           
         </div>
         <div>
-          <a href="?cerrar=true"><input type="button" value="Cerrar Sesión"></a>
+          <a href="?cerrar=true"><input id="logout" type="button" value="Cerrar Sesión"></a>
         </div>
       </div>
     </div>

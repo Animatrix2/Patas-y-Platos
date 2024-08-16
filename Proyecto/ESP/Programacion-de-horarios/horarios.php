@@ -146,7 +146,7 @@ $tablaHTML .= "</table>";
         </div>
     </div>
     <div class="boton-accionar">
-        <button onclick="servoAction()" id="boton-3" class="button-Extra"><img src="../img/activar-desactivar.png" alt="" class="Botttton " align=center></button>
+        <button onclick="servoAction()" id="boton-3" class="button-Extra"></button>
     </div>
     <div class="Boton-Abrir">
         <button id="open" class="button-Extra">Configurar PetPenser</button>

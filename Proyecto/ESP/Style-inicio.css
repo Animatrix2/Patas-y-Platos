@@ -56,7 +56,33 @@
     margin: 20px;
   }
   
+  #logout {
+    border: none;
+      outline: none;
+      background-color: #e75c5c;
+      padding: 20px 35px; /* Ajustamos el tamaño del botón */
+      color: #fff;
+      border-radius: 5px;
+      transition: all ease 0.1s;
+      box-shadow: 0px 5px 0px 0px #fe9b9b;
+      position: relative;
+      margin: 20px; /* Mantenemos el margen para que no esté pegado al borde de la pantalla */
+    border: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px 25px;
+    text-align: center;
+    cursor: pointer;
+  }
+  #logout:hover {
+    /* Estilos del botón al pasar el mouse */
+    background-color: #eb2222;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 5px 0px 0px #fe9b9b;
+  }
+  
   input[type="button"] {
+    width:150px;
+    height: 40px;
     border: none;
     outline: none;
     background-color: #6c5ce7;
