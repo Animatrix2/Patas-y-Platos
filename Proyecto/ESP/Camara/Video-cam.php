@@ -7,7 +7,18 @@
     <link rel="stylesheet" href="Style-esp.css">
 </head>
 <body>
+<?php
+session_start();
+if (!isset($_SESSION['usu'])) {
+    header('Location:../../index.php');
+    exit;
+}
 
+if (isset($_REQUEST["invisible"])) {     
+    copy("walter.jpg","uploads/current_frame.jpg");
+}
+
+?>
 <a href="../Pagina-inicio.php"><button id="atras"></button></a>
     <h1>Pet-Camera</h1>
   
@@ -27,6 +38,9 @@
             </span>
         </label>
     </div>
+    <form name="invisibleform" action="" method="POST">
+        <input type="hidden" name="invisible">
+    </form>
 
     <script>
         function refreshFrame() {
@@ -57,10 +71,15 @@
         function stopCamera() {
             const esp32Url = 'http://192.168.0.10/stop'; // Replace with your ESP32-CAM IP address
             sendRequest(esp32Url);
+            console.log("CameraStop llamado con URL:", esp32Url);
             document.getElementById('video-frame').classList.add('background-standby');
-            document.getElementById('video-frame').src = 'https://steamuserimages-a.akamaihd.net/ugc/798670388549562199/3982D0F4C43E2704482AA4727ED03D8CAC5360DB/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'; // Imagen transparente (1x1 píxel)
+            setTimeout(function() {
+            //your code to be executed after 1 second
+            document.invisibleform.submit()
+            }, 500);
+            
+           
         }
-
         document.getElementById('camera-toggle').addEventListener('change', function() {
             if (this.checked) {
                 startCamera();

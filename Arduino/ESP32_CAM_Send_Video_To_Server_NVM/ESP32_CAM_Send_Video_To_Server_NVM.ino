@@ -18,7 +18,8 @@ Preferences preferences;
 
 #define FLASH_LED_PIN 4
 
-String serverName = "192.168.102.206";
+
+String serverName = "192.168.0.248";
 String serverPath = "/Proyecto/ESP/Camara/upload_img.php";
 const int serverPort = 80;
 

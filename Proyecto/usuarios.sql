@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 07-07-2024 a las 21:14:24
+-- Tiempo de generación: 16-08-2024 a las 01:23:34
 -- Versión del servidor: 8.2.0
 -- Versión de PHP: 8.2.13
 
@@ -34,16 +34,19 @@ CREATE TABLE IF NOT EXISTS `horarios` (
   `Minuto` int NOT NULL,
   `ID_Usuario` int NOT NULL,
   PRIMARY KEY (`IdHorarios`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `horarios`
 --
 
 INSERT INTO `horarios` (`IdHorarios`, `Hora`, `Minuto`, `ID_Usuario`) VALUES
-(48, 12, 30, 0),
-(47, 8, 55, 0),
-(50, 13, 20, 0);
+(59, 15, 50, 11),
+(58, 10, 20, 11),
+(51, 12, 0, 7),
+(52, 13, 30, 7),
+(53, 12, 30, 7),
+(57, 23, 5, 7);
 
 -- --------------------------------------------------------
 
@@ -53,17 +56,18 @@ INSERT INTO `horarios` (`IdHorarios`, `Hora`, `Minuto`, `ID_Usuario`) VALUES
 
 DROP TABLE IF EXISTS `porciones`;
 CREATE TABLE IF NOT EXISTS `porciones` (
-  `IdPorcion` int NOT NULL AUTO_INCREMENT,
+  `ID_Usuario` int NOT NULL AUTO_INCREMENT,
   `Porcion` int NOT NULL,
-  PRIMARY KEY (`IdPorcion`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`ID_Usuario`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `porciones`
 --
 
-INSERT INTO `porciones` (`IdPorcion`, `Porcion`) VALUES
-(1, 1);
+INSERT INTO `porciones` (`ID_Usuario`, `Porcion`) VALUES
+(11, 5),
+(7, 3);
 
 -- --------------------------------------------------------
 
@@ -77,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `users`
@@ -87,7 +91,8 @@ INSERT INTO `users` (`id`, `username`, `password`) VALUES
 (6, 'Ramierez', '$2y$10$TTEHBBZyDQYjxoIyfgdhm.EuJs4FbU7P3eBj/1Ohl0aa3HWx7lcOu'),
 (4, 'Gonzalo', '123456'),
 (10, 'Lopez', '123456'),
-(7, 'XD', '$2y$10$1egcjEIuHP8AtDd.eVm7Te77Pdws/WDq/aQCflf2Puoey6nJsYH/u');
+(7, 'XD', '$2y$10$1egcjEIuHP8AtDd.eVm7Te77Pdws/WDq/aQCflf2Puoey6nJsYH/u'),
+(11, 'main teemo', '$2y$10$VILJQSxRwpvvXxNQzBttd.TyRrncEhZTdfe/sENOQxlhSZcl7DBoK');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

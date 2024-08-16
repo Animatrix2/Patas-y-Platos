@@ -11,9 +11,10 @@
 session_start();
   
 if (!isset($_SESSION['usu'])) {
-  header('Location:../index.php');
-  exit;
+    header('Location:../../index.php');
+    exit;
 }
+$ID_Usuario = $_SESSION["id"];
 $mensaje = "";
 
 // Conexión a la base de datos
@@ -43,7 +44,7 @@ if (isset($_REQUEST["programar_php"]) && $_REQUEST["programar_php"] == "programa
 
     if ($Hora !== null && $Minuto !== null) {
         // Verificar el número de horarios existentes
-        $countSql = "SELECT COUNT(*) AS total FROM horarios";
+        $countSql = "SELECT COUNT(*) AS total FROM horarios WHERE ID_Usuario = $ID_Usuario;";
         $countResult = $conexion->query($countSql);
         $countRow = $countResult->fetch_assoc();
         
@@ -51,13 +52,13 @@ if (isset($_REQUEST["programar_php"]) && $_REQUEST["programar_php"] == "programa
             $mensaje = "Se ha alcanzado el límite máximo de horarios.";
             echo "<script>alert('Se ha alcanzado el límite máximo de horarios.');</script>";
         } else {
-            $checksql = "SELECT * FROM horarios WHERE Hora = $Hora AND Minuto = $Minuto;";
+            $checksql = "SELECT * FROM horarios WHERE Hora = $Hora AND Minuto = $Minuto AND ID_Usuario = $ID_Usuario;";
             $result = mysqli_query($conexion, $checksql);
             if (mysqli_num_rows($result) > 0) {
                 $mensaje = "Hora ya existente.";
                 echo "<script>alert('Hora ya existente.');</script>";
             } else {
-                $textsql = "INSERT INTO horarios (Hora, Minuto) VALUES ('$Hora', '$Minuto');";
+                $textsql = "INSERT INTO horarios (Hora, Minuto, ID_Usuario) VALUES ('$Hora', '$Minuto', '$ID_Usuario');";
                 $consulta = mysqli_query($conexion, $textsql);
                 if ($consulta) {
                     $mensaje = "Horario agregado.";
@@ -71,8 +72,7 @@ if (isset($_REQUEST["programar_php"]) && $_REQUEST["programar_php"] == "programa
     }
 }
 
-$idPorcion = 1;
-$porcionSql = "SELECT Porcion FROM porciones WHERE IdPorcion = $idPorcion";
+$porcionSql = "SELECT Porcion FROM porciones WHERE ID_Usuario = $ID_Usuario";
 $porcionResultado = $conexion->query($porcionSql);
 $porcionValor = "";
 
@@ -85,10 +85,21 @@ if ($porcionResultado && $porcionResultado->num_rows > 0) {
 
 if (isset($_REQUEST["duracion_php"]) && $_REQUEST["duracion_php"] == "duracion") {
     $porcionValor = $_REQUEST["delay"];
-    $checksql = "UPDATE `porciones` SET 
-    IdPorcion= '$idPorcion',
-    porcion= '$porcionValor'
-    WHERE `IdPorcion` = $idPorcion;";
+
+    if($porcionResultado->num_rows > 0){
+        $checksql = "UPDATE `porciones` SET 
+        Porcion= '$porcionValor'
+        WHERE `ID_Usuario` = $ID_Usuario;";
+
+        
+    }
+    else{
+        $checksql = "INSERT INTO porciones (Porcion, ID_Usuario) VALUES ('$porcionValor', '$ID_Usuario');";
+
+    }
+
+
+    
     $consulta = mysqli_query($conexion, $checksql);
     if ($consulta) {
         $mensaje = "Duración editada.";
@@ -98,7 +109,7 @@ if (isset($_REQUEST["duracion_php"]) && $_REQUEST["duracion_php"] == "duracion")
 }
 
 // Consulta para obtener los horarios de la tabla horarios
-$sql = "SELECT IdHorarios, Hora, Minuto FROM horarios ORDER BY Hora ASC, Minuto ASC LIMIT 5";
+$sql = "SELECT IdHorarios, Hora, Minuto FROM horarios WHERE ID_Usuario = $ID_Usuario ORDER BY Hora ASC, Minuto ASC LIMIT 5";
 $resultado = $conexion->query($sql);
 
 // Variable para almacenar la tabla HTML
@@ -199,29 +210,31 @@ $tablaHTML .= "</table>";
     }
 
     function Programar() {
-        const hora = document.getElementById("hora").value;
-        const minuto = document.getElementById("minuto").value;
-        if (hora === "" || minuto === "") {
-            alert("Por favor complete todos los campos de hora y minuto.");
-            return;
-        }else {
-            console.log("Programar llamado con valores:", hora, minuto);
+    const hora = parseInt(document.getElementById("hora").value);
+    const minuto = parseInt(document.getElementById("minuto").value);
+
+    if (isNaN(hora) || isNaN(minuto)) {
+        alert("Por favor complete todos los campos de hora y minuto.");
+        return;
+    } else if (hora < 0 || hora > 23 || minuto < 0 || minuto > 59) {
+        alert("Por favor use números válidos.");
+        return;
+    } else {
+        console.log("Programar llamado con valores:", hora, minuto);
         setServoSchedule(hora, minuto);
-
         setTimeout(function() {
-        document.horarioForm.programar_php.value = "programar";
-        document.horarioForm.submit();
-        }, 1000);
-
-        }
-       
+            document.horarioForm.programar_php.value = "programar";
+            document.horarioForm.submit();
+        }, 500);
     }
+}
+
 
     function Duracion() {
         const duracion = document.getElementById("delay").value;
         console.log("Duracion llamado con valor:", duracion);
         if (duracion == "" || duracion<=0 ) {
-        alert("Por favor complete el campo de duración. o pongo mas de 0");
+        alert("Por favor complete el campo de duración. o ponga más de 0");
         return; // Detener la ejecución si faltan campos
     }
     else{
@@ -230,13 +243,10 @@ $tablaHTML .= "</table>";
             //your code to be executed after 1 second
             document.duracionForm.duracion_php.value="duracion";
             document.duracionForm.submit() 
-}, 1000);
+}, 500);
 
     } 
     }
-
-
-
     
     function Eliminar(hora, minuto, idHorarios) {
         console.log("Eliminar llamado con valores:", hora, minuto);
@@ -244,7 +254,7 @@ $tablaHTML .= "</table>";
 
         setTimeout(function() {
         document.forms["eliminarForm_" + idHorarios].submit();
-        }, 1000);
+        }, 500);
     }
 
     function servoAction() {

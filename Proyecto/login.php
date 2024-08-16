@@ -20,6 +20,10 @@ if (mysqli_num_rows($result) == 1) {
         // Credenciales válidas, iniciar sesión
         session_start();
         $_SESSION['usu'] = $username;
+        $query = "SELECT id FROM users WHERE username='$username'";
+        $result = mysqli_query($conn, $query);
+        $id = $result->fetch_assoc();
+        $_SESSION['id'] = $id["id"];
         // Redirigir al usuario a la página de inicio
         header('Location: bienvenido.php');
     } else {
