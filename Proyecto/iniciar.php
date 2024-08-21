@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             </form>
         </form>
-        </p><a href="index.php"><button class="volver">Ir atras</button>
+        </p><a href="Pagina-inicio.php"><button class="volver">Ir atras</button>
     </div>
     </div>
 </body>

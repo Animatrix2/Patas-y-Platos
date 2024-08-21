@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Bienvenida</title>
-    <meta http-equiv="Refresh" content="5;ESP/Pagina-inicio.php" />
+    <meta http-equiv="Refresh" content="3;index.php" />
     <link rel="stylesheet" href="styles.css">
 </head>
 <?php
 session_start();
   
 if (!isset($_SESSION['usu'])) {
-    header('Location:index.php');
+    header('Location:Pagina-inicio.php');
     exit;
 }
 

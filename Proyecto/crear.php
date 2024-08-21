@@ -32,7 +32,7 @@
             }
             ?>
         </form>
-        <a href="index.php"><button class="volver">Ir atras</button></a>
+        <a href="Pagina-inicio.php"><button class="volver">Ir atras</button></a>
          
          
     </div>

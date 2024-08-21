@@ -11,7 +11,7 @@
 session_start();
   
 if (!isset($_SESSION['usu'])) {
-    header('Location:../../index.php');
+    header('Location:../../Pagina-inicio.php');
     exit;
 }
 $ID_Usuario = $_SESSION["id"];
@@ -135,7 +135,7 @@ $tablaHTML .= "</table>";
 
 ?>
 <body >
-<a href="../Pagina-inicio.php"><button id="atras"></button></a>
+<a href="../../index.php"><button id="atras"></button></a>
 <div class="ConenedorDeTodo">
     <div id="Titulo">
         <h1>Horarios</h1>

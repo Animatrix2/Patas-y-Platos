@@ -10,7 +10,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usu'])) {
-    header('Location:../../index.php');
+    header('Location:../../Pagina-inicio.php');
     exit;
 }
 
@@ -19,7 +19,7 @@ if (isset($_REQUEST["invisible"])) {
 }
 
 ?>
-<a href="../Pagina-inicio.php"><button id="atras"></button></a>
+<a href="../../index.php"><button id="atras"></button></a>
     <h1>Pet-Camera</h1>
   
     <div class="contenedor-botones">

@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     background-image: url('ESP/img/Fondo-de-pantalla-Escritorio.png');
     background-size: 100% 100%;
-    display: flex;
+   
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -12,6 +12,7 @@ body {
   }
   
   .login-container {
+    margin: 0 auto;
     background-color: #ffeab1;
     padding: 20px;
     border-radius: 8px;
@@ -21,11 +22,14 @@ body {
     animation: fadeIn 2s ease-in-out; /* Agregamos una animación para el contenedor de login */
   }
   .inner-container {
+    display: flex;
     background-color: #6c5ce7;
     padding: 20px;
+    width: 350px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-    margin: 20px;
+    margin: 0 auto;
+    margin-top: 20px;
   }
   h2 {
     margin-bottom: 20px;
@@ -114,6 +118,33 @@ button{
   cursor: pointer;
 }
 
+footer {
+  height: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin-top: 50px;
+  background-color: #f3eb9f; /* Color de fondo del footer, igual que el de la página */
+  padding: 5px;
+  text-align: center;
+  color: #333; /* Color de texto del footer */
+}
+.logo {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 60px; 
+  height: 60px; 
+  object-fit: cover;
+  background-color: transparent; /* propiedad para que se muestre trasparente el fondo(no funciona) */
+  z-index: 1; 
+}
+
+.footer-container {
+  max-width: 400px; /* Ancho máximo del contenido del footer */
+  margin: 0 auto; /* Centrar el contenido del footer */
+}
 
 
 
