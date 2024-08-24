@@ -38,7 +38,7 @@ int servoPos = 160;
 Ticker servoTicker;
 Ticker midnightTicker;
 Ticker pingTicker;
-int moveDuration = 0;
+float moveDuration = 0.0;
 int setHour = -1;
 int setMinute = -1;
 bool moveServo = false;
@@ -308,8 +308,8 @@ void loadSchedules() {
 
 void handleSetMoveDuration() {
   if (myServo.attached() && server.hasArg("delay")) {
-    moveDuration = server.arg("delay").toInt() * 1000;
-    Serial.printf("Servo move duration set to %d seconds\n", moveDuration / 1000);
+    moveDuration = server.arg("delay").toFloat() * 1000.0;
+    Serial.printf("Servo move duration set to %.3f seconds\n", moveDuration / 1000.0);
     saveDuration();
   }
 }
@@ -317,14 +317,14 @@ void handleSetMoveDuration() {
 void saveDuration() {
   preferences.begin("duration", false);
   String keyDuration = "moveDuration";
-  preferences.putInt(keyDuration.c_str(), moveDuration);
+  preferences.putFloat(keyDuration.c_str(), moveDuration);
   preferences.end();
 }
 
 void loadDuration() {
-  preferences.begin("duration", false);
+  preferences.begin("duration", true);
   String keyDuration = "moveDuration";
-  moveDuration = preferences.getInt(keyDuration.c_str(), -1);
+  moveDuration = preferences.getFloat(keyDuration.c_str(), 0.0);
   preferences.end();
 }
 

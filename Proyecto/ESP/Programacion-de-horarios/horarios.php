@@ -9,6 +9,8 @@
 </head>
 <?php
 session_start();
+
+include '../esp-ip.php'; 
   
 if (!isset($_SESSION['usu'])) {
     header('Location:../../Pagina-inicio.php');
@@ -258,25 +260,25 @@ $tablaHTML .= "</table>";
     }
 
     function servoAction() {
-        const esp32Url = `http://192.168.0.10/servoAction`;
+        const esp32Url = `http://<?php echo $esp_ip;?>/servoAction`;
         console.log("servoAction llamado con URL:", esp32Url);
         sendRequest(esp32Url);
     }
 
     function setServoSchedule(horaValue, minutoValue) {
-        const esp32Url = `http://192.168.0.10/setServoSchedule?hora=${horaValue}&minuto=${minutoValue}`;
+        const esp32Url = `http://<?php echo $esp_ip;?>/setServoSchedule?hora=${horaValue}&minuto=${minutoValue}`;
         console.log("setServoSchedule llamado con URL:", esp32Url);
         sendRequest(esp32Url);
     }
 
     function removeServoSchedule(horaValue, minutoValue) {
-        const esp32Url = `http://192.168.0.10/removeServoSchedule?hora=${horaValue}&minuto=${minutoValue}`;
+        const esp32Url = `http://<?php echo $esp_ip;?>/removeServoSchedule?hora=${horaValue}&minuto=${minutoValue}`;
         console.log("removeServoSchedule llamado con URL:", esp32Url);
         sendRequest(esp32Url);
     }
 
     function setMoveDuration(duracionValue) {
-        const esp32Url = `http://192.168.0.10/setMoveDuration?delay=${duracionValue}`;
+        const esp32Url = `http://<?php echo $esp_ip;?>/setMoveDuration?delay=${duracionValue}`;
         console.log("setMoveDuration llamado con URL:", esp32Url);
         sendRequest(esp32Url);
     }

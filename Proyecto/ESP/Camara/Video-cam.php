@@ -8,6 +8,7 @@
 </head>
 <body>
 <?php
+include '../esp-ip.php'; 
 session_start();
 if (!isset($_SESSION['usu'])) {
     header('Location:../../Pagina-inicio.php');
@@ -63,13 +64,13 @@ if (isset($_REQUEST["invisible"])) {
         }
 
         function startCamera() {
-            const esp32Url = 'http://192.168.0.10/start'; // Replace with your ESP32-CAM IP address
+            const esp32Url = 'http://<?php echo $esp_ip;?>/start'; // Replace with your ESP32-CAM IP address
             sendRequest(esp32Url);
             document.getElementById('video-frame').classList.remove('background-standby');
         }
 
         function stopCamera() {
-            const esp32Url = 'http://192.168.0.10/stop'; // Replace with your ESP32-CAM IP address
+            const esp32Url = 'http://<?php echo $esp_ip;?>/stop'; // Replace with your ESP32-CAM IP address
             sendRequest(esp32Url);
             console.log("CameraStop llamado con URL:", esp32Url);
             document.getElementById('video-frame').classList.add('background-standby');
