@@ -25,25 +25,6 @@
 ?>
  <body >
 
-  
-  <div class="container">
-    <div class="inner-container">
-    <h1>Bienvenido a su Pet-Penser</h1>
-
-      <div class="button-container">
-        <div>
-          <a href="Camara/Video-cam.php"><input type="button" value="Camara"style= ></a>
-        </div>
-        <div>
-          <a href="Programacion-de-horarios/horarios.php"><input type="button" value="Horarios"></a>
-          
-        </div>
-        <div>
-          <a href="?cerrar=true"><input id="logout" type="button" value="Cerrar Sesión"></a>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
   

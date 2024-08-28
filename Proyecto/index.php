@@ -39,7 +39,12 @@
           
         </div>
         <div>
+          <a href="ESP/Cambio-Contra-usuario/pag-config.php"><input type="button" value="Configuración "></a>
+          
+        </div>
+        <div>
           <a href="?cerrar=true"><input id="logout" type="button" value="Cerrar Sesión"></a>
+          
         </div>
       </div>
     </div>

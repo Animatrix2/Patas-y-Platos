@@ -1,0 +1,312 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  #atras {
+    text-align: right;
+    cursor: pointer;
+    position: relative;
+left: 200px;
+  background: url(../img/flecha-izquierda.png) no-repeat center;
+  background-size: cover;
+  width: 100px;
+  height: 50px;
+  border: none;
+  outline: none;
+  background-color: #6c5ce7;
+    border-radius: 5px;
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+    margin: 20px; /* Mantenemos el margen para que no esté pegado al borde de la pantalla */
+  border: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px 35px;
+}
+#atras:hover {
+  /* Estilos del botón al pasar el mouse */
+  background-color: #3a22eb;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 5px 0px 0px #a29bfe;
+}
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('../img/fondo1.jpg');
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 100px;
+  }
+  
+  .container {
+    width: 700px;
+    background-color: #faf6dd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .inner-container {
+    background-color: #f3eb9f;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    margin: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+    font-size: 36px;
+    font-weight: bold;
+    animation: fadeIn 2s ease;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px;
+  }
+  
+  .button-container div {
+    margin: 20px;
+  }
+  
+  #logout {
+    border: none;
+      outline: none;
+      background-color: #e75c5c;
+      padding: 20px 35px; 
+      color: #fff;
+      border-radius: 5px;
+      transition: all ease 0.1s;
+      box-shadow: 0px 5px 0px 0px #fe9b9b;
+      position: relative;
+      margin: 20px; 
+    border: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px 25px;
+    text-align: center;
+    cursor: pointer;
+  }
+  #logout:hover {
+    
+    background-color: #eb2222;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 5px 0px 0px #fe9b9b;
+  }
+  
+  input[type="button"] {
+    width:auto;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: #6c5ce7;
+    padding: 15px 50px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 5px;
+    transition: all ease 0.1s;
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+    cursor: pointer;
+  }
+  
+  input[type="button"]:hover {
+    background-color: #3a22eb;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+  }
+  
+  input[type="button"]:active {
+    background-color: #6c5ce7;
+    transform: translateY(5px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+  }
+
+
+  h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    display: inline-block;
+    margin-right: 20px;
+  }
+  
+  a {
+    color: #6c5ce7; 
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #3a22eb; 
+  }
+
+  .user-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; 
+}
+
+.user-options a {
+    text-align: center;
+    width: calc(33.33% - 10px); 
+    margin-right: 5px;
+}
+
+.user-options a:last-child {
+    margin-right: 0;
+}
+
+.user-options input[type="button"] {
+    width: calc(33.33% - 10px); 
+    min-width: 150px; 
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: #6c5ce7;
+    padding: 10px 20px; 
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 5px;
+    transition: all ease 0.1s;
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+    white-space: nowrap; 
+    text-align: center;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    font-size: 11px; 
+    padding: 8px 15px; 
+    width: 180px; 
+    height: 40px;
+    font-size: 12px;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-options input[type="button"]:hover {
+    background-color: #3a22eb;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+}
+
+.user-options input[type="button"]:active {
+    background-color: #6c5ce7;
+    transform: translateY(5px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+.Eliminar{
+    background-color: #f5365c !important;
+    color: rgb(0, 0, 0) !important;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 5px 0px 0px #fe9b9b !important;
+    border:0px;
+    border-radius: 20px;
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
+.Eliminar:hover{
+    background-color: #bd1c1c !important;
+    color: rgb(255, 255, 255)!important;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 5px 0px 0px #bb7373 !important;
+ 
+}
+
+p{
+    font-size: 20px;
+}
+.modal-container {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.527);
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    pointer-events: none;
+    opacity: 0;  
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    transition: opacity 0.3s ease;
+    
+  }
+  
+  .modal-container titulo{
+      display:block;
+  }
+  
+  .show {
+    pointer-events: auto;
+    opacity: 1;
+  }
+  
+  .modal {
+  
+      background-color: #fdc781;
+      width: 600px;
+      max-width: 100%;
+      padding: 30px 50px;
+      border-radius: 50px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      text-align: center;
+  }
+
+
+
+
+
+@media screen and (max-width: 768px) {
+    .user-options {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .user-options a {
+        width: 100%; 
+        margin-bottom: 10px; 
+    }
+
+    .user-options a:last-child {
+        margin-bottom: 0; 
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .user-options input[type="button"] {
+        padding: 10px 20px; 
+        font-size: 10px; 
+    }
+}
+
