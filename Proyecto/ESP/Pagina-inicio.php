@@ -51,7 +51,7 @@
       <h2>Sobre nosotros</h2>
     <p>Somos una empresa dedicada a la creación de soluciones innovadoras para el cuidado de mascotas. Nuestra misión es proporcionar herramientas y servicios de alta calidad para que los dueños de mascotas puedan cuidar de sus amigos de cuatro patas de la mejor manera posible.</p>
     <ul>
-      <li><a href="#messilaconchadetuhermana">Contacto</a></li>
+      <li><a href="#">Contacto</a></li>
       <li><a href="#">Política de privacidad</a></li>
       <li><a href="#">Más sobre nosotros</a></li>
     </ul>

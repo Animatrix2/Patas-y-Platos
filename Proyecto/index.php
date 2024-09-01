@@ -39,7 +39,7 @@
           
         </div>
         <div>
-          <a href="ESP/Cambio-Contra-usuario/pag-config.php"><input type="button" value="Configuración "></a>
+          <a href="ESP/Cambio-Contra-usuario/pag-config.php"><input type="button" value="Configuración " id="config"> </a>
           
         </div>
         <div>

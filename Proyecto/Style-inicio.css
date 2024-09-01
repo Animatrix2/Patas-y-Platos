@@ -139,3 +139,7 @@
   a:hover {
     color: #3a22eb; /* Color de los enlaces del footer al pasar el mouse */
   }
+  #config{
+    text-align: center;
+
+  }
