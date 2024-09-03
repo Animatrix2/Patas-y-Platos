@@ -175,7 +175,7 @@ $tablaHTML .= "</table>";
                             <input type="number" id="minuto" min="0" max="59" name="minutos" required>
                             <br>
                             <button onclick="Programar()" type="button" class="boton" name="programar"></button>
-                            <input type="hidden" class="boton" name="programar_php">
+                            <input type="hidden" class="boton" name="prog"
                         </form>
                     </td>
                     <td>

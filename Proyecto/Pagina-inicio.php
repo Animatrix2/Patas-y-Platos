@@ -25,32 +25,36 @@
                  <button class="volver">¿No te has registrado?</button>
                  </a>
             </div>
-    </div>
-    </div>
-</div>
-<footer>
-    <div class="footer-conteiner">
-      <h2>Sobre nosotros</h2>
-    <p>Somos una empresa dedicada a la creación de soluciones innovadoras para el cuidado de mascotas. Nuestra misión es proporcionar herramientas y servicios de alta calidad para que los dueños de mascotas puedan cuidar de sus amigos de cuatro patas de la mejor manera posible.</p>
-    <ul>
-    <table align="center" >
-    <tr>
-    <td width="33%">
-      <a href="#messilaconchadetuhermana">Contacto</a>
-    </td>
-    <td width="33%">
-      <a href="#">Política de privacidad</a>
-      </td>
-    <td width="33%">
-      <a href="#">Más sobre nosotros</a>
-      </td>
-</tr>
-</table>
-    </ul>
-      </div>
+           
+
+     <br><br>
       <div>
         <img src="ESP/img\platos1.png" alt="Logo" class="logo">
       </div>
+    
+    </div>
+</div>
+<footer>
+<div class="footer-container">
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024-2025 Todos los derechos reservados</p>
+      <p>Patasyplatos@gmail.com | +54-3624003516</p>
+    </div>
+
+    <div class="social-links">
+      <a href="https://linkedin.com" class="social-link" target="_blank" rel="noopener noreferrer">
+        <i class="bi bi-linkedin"></i>
+      </a>
+      <a href="https://instagram.com" class="social-link" target="_blank" rel="noopener noreferrer">
+        <i class="bi bi-instagram"></i>
+      </a>
+      <a href="https://github.com" class="social-link" target="_blank" rel="noopener noreferrer">
+        <i class="bi bi-github"></i>
+      </a>
+    </div>
+
+
   </footer>
 </body>
 </html>
