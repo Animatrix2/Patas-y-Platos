@@ -44,6 +44,7 @@ int setMinute = -1;
 bool moveServo = false;
 Ticker servoReturnTicker;
 
+//Determina la zona horaria
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", -3 * 3600, 60000);  // GMT-3 for Buenos Aires, 1-minute update interval
 
@@ -66,6 +67,7 @@ void setRGBColor(int red, int green, int blue) {
 }
 
 
+//Envía los frames al servidor
 
 void sendFrameToServer(camera_fb_t *fb) {
   if (!fb) {
@@ -149,6 +151,8 @@ void handleServoRight() {
   }
 }
 
+//Se activa únicamente cuando el usuario toca el botón de activar. Mueve el servo
+
 void handleServoAction() {
   if (myServo.attached()) {
     int delayTime = moveDuration;
@@ -175,6 +179,8 @@ void handleServoAction() {
   }
 }
 
+//Mueve el servo la cantidad de tiempo querida cuando la variable moveServo es true
+
 void moveServoAutomatically() {
   if (myServo.attached() && moveServo) {
     servoPos -= 60;
@@ -193,6 +199,9 @@ void moveServoAutomatically() {
   }
 }
 
+
+//Revisa si los horarios coinciden con la hora real y modifica la variable moveServo
+
 void checkServoSchedule() {
   if (myServo.attached()) {
     timeClient.update();  // Actualizar la hora
@@ -210,7 +219,7 @@ void checkServoSchedule() {
         schedules[i].activated = true;  // Marcar como activado para este horario
         preferences.begin("schedules", false);
 
-        //Modifica el estado de los horarios de la MNV
+        //Modifica el estado de los horarios de la MNV (memoria no volátil)
         String keyActivated = "activated" + String(i);
         preferences.putBool(keyActivated.c_str(), true);
 
@@ -223,6 +232,9 @@ void checkServoSchedule() {
     Serial.println("Servo not attached!");
   }
 }
+
+
+//Agrega horarios recibidos mediante peticiones
 
 void handleSetServoSchedule() {
   if (server.hasArg("hora") && server.hasArg("minuto")) {
@@ -247,6 +259,7 @@ void handleSetServoSchedule() {
   }
 }
 
+// Buscar y eliminar el horario especificado
 void handleRemoveServoSchedule() {
   if (server.hasArg("hora") && server.hasArg("minuto")) {
     int removeHour = server.arg("hora").toInt();
@@ -254,7 +267,6 @@ void handleRemoveServoSchedule() {
 
     bool scheduleFound = false;
 
-    // Buscar y eliminar el horario especificado
     for (int i = 0; i < MAX_SCHEDULES; i++) {
       if (schedules[i].hour == removeHour && schedules[i].minute == removeMinute) {
         schedules[i].hour = -1;
@@ -278,6 +290,8 @@ void handleRemoveServoSchedule() {
   }
 }
 
+
+//Guarda los horarios en la memoria no volátil
 void saveSchedules() {
   preferences.begin("schedules", false);
   for (int i = 0; i < MAX_SCHEDULES; i++) {
@@ -292,6 +306,7 @@ void saveSchedules() {
   preferences.end();
 }
 
+//Carga los hoararios almacenados en la memoria no volátil
 void loadSchedules() {
   preferences.begin("schedules", true);
   for (int i = 0; i < MAX_SCHEDULES; i++) {
@@ -306,6 +321,8 @@ void loadSchedules() {
   preferences.end();
 }
 
+
+//Almacena en una variable la duración recibida en la petición
 void handleSetMoveDuration() {
   if (myServo.attached() && server.hasArg("delay")) {
     moveDuration = server.arg("delay").toFloat() * 1000.0;
@@ -314,6 +331,7 @@ void handleSetMoveDuration() {
   }
 }
 
+//Guardala duración en la memoria no volátil
 void saveDuration() {
   preferences.begin("duration", false);
   String keyDuration = "moveDuration";
@@ -321,6 +339,7 @@ void saveDuration() {
   preferences.end();
 }
 
+//Carga la duración almacenada en la memoria no volátil
 void loadDuration() {
   preferences.begin("duration", true);
   String keyDuration = "moveDuration";
@@ -328,11 +347,13 @@ void loadDuration() {
   preferences.end();
 }
 
+//URL Predeterminada
 void handleRoot() {
   String message = "Use /start to start the camera, /stop to stop the camera, /servoLeft to move servo left, /servoRight to move servo right, /setServoSchedule to schedule servo movement, /removeServoSchedule to remove a scheduled servo movement";
   server.send(200, "text/plain", message);
 }
 
+//Si ya llegó la medianoche, reinicia los horarios para que vuelvan a activarse
 void checkMidnight() {
   timeClient.update();
   int currentHour = timeClient.getHours();
@@ -344,6 +365,8 @@ void checkMidnight() {
   }
 }
 
+
+//En desuso
 void sendPingToServer() {
   if (client.connect(serverName.c_str(), serverPort)) {
     client.println("GET /Proyecto/ESP/ping/ping.php HTTP/1.1");
@@ -372,6 +395,8 @@ void setup() {
 
   pinMode(FLASH_LED_PIN, OUTPUT);
 
+
+  //Configuración de WiFiManager para que se conecte automáticamente a las redes guardadas, de lo contrario crea un AP desde el cual el usuario ingresa las credenciales
   WiFiManager wifiManager;
 
   if (!wifiManager.autoConnect("ESP32-CAM-AP")) {
@@ -384,6 +409,10 @@ void setup() {
 
   Serial.println();
   Serial.print("Set the camera ESP32 CAM...");
+
+
+  //Configura pines para el modelo de cámara AI Thinker
+
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -407,6 +436,10 @@ void setup() {
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
 
+
+  //Si queda espacio de caché disponible, aumenta la calidad del video (en desuso)
+
+
   if (psramFound()) {
     config.frame_size = FRAMESIZE_HQVGA;
     config.jpeg_quality = 20;
@@ -416,6 +449,10 @@ void setup() {
     config.jpeg_quality = 20;
     config.fb_count = 1;
   }
+
+
+  //Tira mensajes de error
+
 
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
@@ -432,38 +469,55 @@ void setup() {
   Serial.println();
   Serial.println("Set camera ESP32 CAM successfully.");
 
+  //Configura el servo y lo mueve a su posición inicial
+
   myServo.setPeriodHertz(50);
   myServo.attach(servoPin, 500, 2400);
   myServo.write(servoPos);
 
+  //Lista de instrucciones que puede recibir
+
   server.on("/", handleRoot);
   server.on("/start", handleStartCamera);
   server.on("/stop", handleStopCamera);
+
+  //----------------EN DESUSO----------------------
   server.on("/servoLeft", handleServoLeft);
   server.on("/servoRight", handleServoRight);
+  //-----------------------------------------------
+
   server.on("/servoAction", handleServoAction);
   server.on("/setServoSchedule", handleSetServoSchedule);
   server.on("/removeServoSchedule", handleRemoveServoSchedule);
   server.on("/setMoveDuration", handleSetMoveDuration);
+
+  //Crea su propio servidor web
 
   server.begin();
   Serial.println("HTTP server started");
 
  
 
-  // Initialize schedules
+  // Inicializa los horarios
   for (int i = 0; i < MAX_SCHEDULES; i++) {
     schedules[i].hour = -1;
     schedules[i].minute = -1;
     schedules[i].activated = false;
   }
 
+  //Carga horarios y duraciones ya guardados
+
   loadSchedules();
   loadDuration();
+
+  //Revisa si ya es hora de dispensar
   checkServoSchedule();
+
+  //Revisa cada 30 segundos o una hora respectivamente si los horarios deben ser revisados o reiniciados
   servoTicker.attach(30, checkServoSchedule);
   midnightTicker.attach(3600, checkMidnight);  // Chequear medianoche cada hora
   //pingTicker.attach(5, sendPingToServer);
+
   // Encender LED verde después de la configuración
   setRGBColor(0, 255, 0);
 
