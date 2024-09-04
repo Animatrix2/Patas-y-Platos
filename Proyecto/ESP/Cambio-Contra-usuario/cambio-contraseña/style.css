@@ -1,0 +1,142 @@
+/* Estilos globales */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../../img/Fondo-de-pantalla-Escritorio.png');
+    background-size: 100% 100%;
+   
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+    margin: 0;
+    transition: background-color 0.4s; /* Agregamos una transición para el fondo */
+  }
+  
+  .login-container {
+    margin: 30px auto 70px auto ;
+    background-color: #ffeab1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    animation: fadeIn 2s ease-in-out; /* Agregamos una animación para el contenedor de login */
+  }
+
+  .inner-container {
+    margin-top: 100px;
+    background-color: #6c5ce7;
+    padding: 20px;
+    width: 350px;
+    height: 450px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    margin: 70px auto 70px auto ;
+   
+  }
+  h2 {
+    margin-bottom: 20px;
+    animation: slideInFromLeft 1.5s ease-in-out; /* Agregamos una animación para el título */
+  }
+  
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    text-align: left;
+  }
+  #atras {
+    background: url(../../img/flecha-izquierda.png) no-repeat center;
+    background-size: cover;
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background-color: #6c5ce7;
+      border-radius: 5px;
+      box-shadow: 0px 5px 0px 0px #a29bfe;
+      margin: 20px; /* Mantenemos el margen para que no esté pegado al borde de la pantalla */
+    border: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 20px 35px;
+  }
+
+
+  input {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    background-color: rgba(192, 169, 68, 0.1);
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.4s; /* Agregamos una transición para el borde del input */
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px;
+  }
+  
+  .button-container div {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+
+    
+  }
+  input[type="button"] {
+    border: none;
+    outline: none;
+    background-color: #6c5ce7;
+    padding: 15px 50px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 5px;
+    transition: all ease 0.1s;
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+  } 
+  
+.button{
+  background-color: #6c5ce7;
+  color: white;
+  border: none;
+  border-radius: 5%;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  box-shadow: 0px 5px 0px 0px #a29bfe;
+  
+}
+
+  .button:hover{
+    background-color: #3a22eb;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(5px);
+    box-shadow: 0px 5px 0px 0px #a29bfe;
+  }
+  
+
+
+.volver{
+  width: 200px;
+  cursor: pointer;
+}
+
+
+  @media (max-width: 700px) {  
+    body{
+      background-image: url('ESP/img/Fondo-de-Pantalla-Celular.png');
+      background-size: 100% 100% !important;
+    }
+
+  }
+
+  

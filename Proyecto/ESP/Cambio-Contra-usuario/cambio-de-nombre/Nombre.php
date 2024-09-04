@@ -54,17 +54,22 @@ $conexion->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../cambio-contraseña/style.css">
     <title>Cambiar Nombre de Usuario</title>
+   
+
 </head>
 <body>
-<div class="container">
-    <div class="inner-container">
+<a href="../pag-config.php"><button id="atras"></button></a>
+<div class="inner-container">
+<div class="login-container">
         <h1>Cambiar Nombre de Usuario</h1>
+        <br>
+        <br>
         <form action="" method="POST">
-            <label for="nuevo_nombre">Nuevo Nombre de Usuario:</label><br>
+            <label for="nuevo_nombre">Nuevo Nombre</label><br>
             <input type="text" name="nuevo_nombre" id="nuevo_nombre" required><br><br>
-            <input type="submit" value="Cambiar Nombre">
+            <input type="submit" class="button" value="Cambiar Nombre" style="margin-top: 50px;">
         </form>
     </div>
 </div>

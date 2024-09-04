@@ -6,7 +6,7 @@ body {
    
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 85vh;
     margin: 0;
     transition: background-color 0.4s; /* Agregamos una transición para el fondo */
   }
@@ -139,6 +139,9 @@ footer {
   height: 100px; 
   object-fit: cover;
   background-color: transparent; /* propiedad para que se muestre trasparente el fondo(no funciona) */
+  filter: drop-shadow(
+    10px 10px 20px rgb(112, 107, 83)
+  )
   
 }
 

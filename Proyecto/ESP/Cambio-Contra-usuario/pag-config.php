@@ -61,7 +61,7 @@ $conexion->close();
       <div class="button-container">
       <div class="user-options">
         <a href="cambio-de-nombre/Nombre.php"><input type="button" value="Cambiar nombre de usuario"></a>
-        <a href="cambiar_contraseña.php"><input type="button" value="Cambiar contraseña"></a>
+        <a href="cambio-contraseña/Contraseña.php"><input type="button" value="Cambiar contraseña"></a>
         <input type="button" value="Eliminar cuenta" id="open" class="Eliminar">
     </div>
       </div>
