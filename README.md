@@ -1,3 +1,1 @@
-PATAS
-PLATOS
-PATAS Y PLATOS
+Proyecto que consiste en la creación de un dispenser de comida para mascotas automático y con cámara incluida. Aquí está presente el código tanto del servidor como del microcontrolador utilizado (ESP32-CAM)
