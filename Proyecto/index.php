@@ -6,6 +6,14 @@
   <title>Pagina-Inicio</title>
   <link rel="stylesheet" href="style-inicio.css">
 </head>
+<style>
+  #config {
+    display: inline-block;
+    text-align: center; 
+    padding: 10px 20px; /* Ajusta el padding según sea necesario */
+
+  }
+</style>
 <?php 
   //Identificar si el usuario inicio sesion 
 
@@ -39,8 +47,9 @@
           
         </div>
         <div>
-          <a href="ESP/Cambio-Contra-usuario/pag-config.php"><input type="button" value="Configuración " id="config"> </a>
-          
+          <a href="ESP/Cambio-Contra-usuario/pag-config.php">
+            <input type="button" value="Configuración" id="config">
+          </a>
         </div>
         <div>
           <a href="?cerrar=true"><input id="logout" type="button" value="Cerrar Sesión"></a>
