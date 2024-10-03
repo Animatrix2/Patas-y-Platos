@@ -148,7 +148,10 @@ $tablaHTML .= "</table>";
         </div>
     </div>
     <div class="boton-accionar">
+    <div class="tooltip tooltip-arriba">
+        <span class="tooltiptext">Dispensa comida en el momento.</span>
         <button onclick="servoAction()" id="boton-3" class="button-Extra"></button>
+        </div>
     </div>
     <div class="Boton-Abrir">
         <button id="open" class="button-Extra">Configurar PetPenser</button>
@@ -174,7 +177,10 @@ $tablaHTML .= "</table>";
                             <label for="minuto" style="font-size: 50px;">:</label>
                             <input type="number" id="minuto" min="0" max="59" name="minutos" required>
                             <br>
-                            <button onclick="Programar()" type="button" class="boton" name="programar"></button>
+                            <div class="tooltip tooltip-abajo">
+                                <span class="tooltiptext">Agrega un horario.</span>
+                                <button onclick="Programar()" type="button" class="boton" name="programar"></button>
+                            </div>
                             <input type="hidden" class="boton" name="programar_php">
                         </form>
                     </td>
@@ -183,7 +189,10 @@ $tablaHTML .= "</table>";
                             <h2>Duración</h2>
                             <input type="number" id="delay" name="delay" min="1" value="<?php echo $porcionValor; ?>" required>
                             <br>
+                            <div class="tooltip tooltip-abajo">
+                                <span class="tooltiptext">Guarda la duración en segundos para dispensar el alimento.</span>
                             <button onclick="Duracion()" type="button" class="boton" name="duracion"></button>
+                            </div>
                             <input type="hidden" class="boton" name="duracion_php">
                         </form>
                     </td>

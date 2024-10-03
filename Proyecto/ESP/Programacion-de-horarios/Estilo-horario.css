@@ -5,14 +5,7 @@ body {
   background-image: url('../img/Fondo-de-pantalla-Escritorio.png');
   background-size: 100% 100%;
   height: 100vh;
-
-
 }	
-* {
-  box-sizing: border-box;
-}
-
-
 
 button {
   border: none;
@@ -50,9 +43,87 @@ button {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 10px 25px;
 }
+.inline {
+  display: inline-block;
+  vertical-align: middle; /* Alinea los elementos verticalmente */
+}
 
 
+/* Estilo del contenedor del tooltip */
+      /* Estilo del contenedor del tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
 
+    /* Estilo del tooltip (para arriba) */
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 200px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    /* Flecha del tooltip (para arriba) */
+    .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        border-width: 5px;
+        border-style: solid;
+    }
+
+    /* Mostrar el tooltip al pasar el mouse */
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /* Tooltip arriba del botón */
+    .tooltip-arriba .tooltiptext {
+        bottom: 90%; /* Mueve el tooltip hacia arriba */
+        left: 50%;
+        margin-left: -100px;
+    }
+
+    .tooltip-arriba .tooltiptext::after {
+        top: 100%; /* Flecha en la parte inferior */
+        left: 50%;
+        margin-left: -5px;
+        border-color: #555 transparent transparent transparent;
+    }
+
+    /* Tooltip abajo del botón */
+    .tooltip-abajo .tooltiptext {
+        top: 90%; /* Mueve el tooltip hacia abajo */
+        left: 50%;
+        margin-left: -100px;
+    }
+
+    .tooltip-abajo .tooltiptext::after {
+        bottom: 100%; /* Flecha en la parte superior */
+        left: 50%;
+        margin-left: -5px;
+        border-color: transparent transparent #555 transparent;
+    }
+      /* Mostrar el tooltip al hacer foco (por ejemplo, clic en móviles) */
+      .tooltip:focus .tooltiptext,
+      .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+      }
+
+      /* Estilos para móviles */
+      @media (max-width: 768px) {
+          
+      }
 
 #atras {
   background: url(../img/flecha-izquierda.png) no-repeat center;
@@ -198,6 +269,7 @@ border: 2px rgba(167, 89, 89, 0.651);
 padding: 10px;
 background-color: rgba(116, 116, 116, 0.781);
 border-radius: 10px;
+width: auto;
 
 }
 #Titulo{
@@ -315,6 +387,7 @@ border-radius: 10px;
     text-align: center;
 
  }
+
  #porcioness{
     border: 0;
     background-color: rgb(102, 187, 243);
@@ -329,6 +402,12 @@ border-radius: 10px;
     background-image: url('../img/Fondo-de-Pantalla-Celular.png');
     background-size: 100% 100%;
   }
+  .tooltip .tooltiptext {
+    width: 100%;
+    left: 0;
+    margin-left: 0;
+    bottom: 100%;
+}
     .ConenedorDeTodo {
       grid-template-columns: 1fr;
       grid-template-rows: auto;
@@ -345,7 +424,7 @@ border-radius: 10px;
       grid-row-start: 2;
       font-size: 30px;
       font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
-      width: 100%;
+      width: 95%;
       border: 2px rgba(230, 238, 161, 0.938);
       border-radius: 10px;
       background-color: rgba(241, 241, 167, 0.938);
@@ -383,9 +462,6 @@ border-radius: 10px;
       background-color: hsl(247, 74%, 63%) ;
       border: 0;
     }
-  
-
-  
     .Boton-Abrir {
       grid-column-start: 1;
       grid-row-start: 3;
