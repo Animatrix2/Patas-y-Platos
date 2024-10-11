@@ -349,9 +349,35 @@ void loadDuration() {
 
 //URL Predeterminada
 void handleRoot() {
-  String message = "Use /start to start the camera, /stop to stop the camera, /servoLeft to move servo left, /servoRight to move servo right, /setServoSchedule to schedule servo movement, /removeServoSchedule to remove a scheduled servo movement";
-  server.send(200, "text/plain", message);
+  String message = "<html><body>";
+  message += "<h1>ESP32 Server Configuration</h1>";
+  message += "<form action=\"/setServerIP\" method=\"POST\">";
+  message += "Server IP: <input type=\"text\" name=\"serverIP\"><br>";
+  message += "<input type=\"submit\" value=\"Set Server IP\">";
+  message += "</form>";
+  message += "</body></html>";
+  
+  server.send(200, "text/html", message);
 }
+
+void handleSetServerIP() {
+  if (server.hasArg("serverIP")) {
+    serverName = server.arg("serverIP");  // Guardar la IP ingresada
+    Serial.println("Server IP set to: " + serverName);
+    
+    // Guardar en memoria no volátil
+    preferences.begin("server", false);
+    preferences.putString("serverName", serverName);
+    preferences.end();
+
+    server.send(200, "text/plain", "Server IP updated to: " + serverName);
+  } else {
+    server.send(400, "text/plain", "Missing serverIP argument");
+  }
+}
+
+
+
 
 //Si ya llegó la medianoche, reinicia los horarios para que vuelvan a activarse
 void checkMidnight() {
@@ -490,6 +516,7 @@ void setup() {
   server.on("/setServoSchedule", handleSetServoSchedule);
   server.on("/removeServoSchedule", handleRemoveServoSchedule);
   server.on("/setMoveDuration", handleSetMoveDuration);
+   server.on("/setServerIP", HTTP_POST, handleSetServerIP);  // Ruta para actualizar la IP del servidor
 
   //Crea su propio servidor web
 
@@ -520,6 +547,10 @@ void setup() {
 
   // Encender LED verde después de la configuración
   setRGBColor(0, 255, 0);
+
+  preferences.begin("server", true);
+  serverName = preferences.getString("serverName", "192.168.0.248"); // Valor por defecto
+  preferences.end();
 
 }
 
